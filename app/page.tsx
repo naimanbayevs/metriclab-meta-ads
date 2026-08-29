@@ -28,7 +28,7 @@ export default function Home() {
 
         <div className="hero-copy">
           <p className="eyebrow">
-            <span /> Таргетированная реклама · Алматы
+            <span /> Таргетированная реклама · Meta Ads
           </p>
 
           <h1>
@@ -46,10 +46,10 @@ export default function Home() {
             </p>
 
             <div className="hero-actions">
-              <a className="primary-cta" href="#contact">
+              <a className="hero-button primary-cta" href="#contact">
                 Обсудить проект <ArrowUpRight />
               </a>
-              <a className="text-link" href="#cases">
+              <a className="hero-button secondary-cta" href="#cases">
                 Смотреть кейсы <span aria-hidden="true">↓</span>
               </a>
             </div>
@@ -75,21 +75,21 @@ export default function Home() {
         </div>
 
         <div className="hero-proof" aria-label="Опыт и специализация">
-          <div className="proof-lead">
-            <span className="proof-index">01</span>
-            <p>Стратегия начинается с понимания продаж</p>
-          </div>
           <div className="proof-item">
             <strong>10+</strong>
-            <span>лет в продажах</span>
+            <span>лет в рекламе и продажах</span>
           </div>
           <div className="proof-item">
-            <strong>B2B</strong>
-            <span>и B2C опыт</span>
+            <strong>$500K</strong>
+            <span>рекламного бюджета</span>
           </div>
           <div className="proof-item">
-            <strong>KPI</strong>
-            <span>в основе решений</span>
+            <strong>×5</strong>
+            <span>рост продаж</span>
+          </div>
+          <div className="proof-item">
+            <strong>LTV↑</strong>
+            <span>клиенты остаются надолго</span>
           </div>
         </div>
       </section>
