@@ -7,36 +7,35 @@ const ArrowUpRight = () => (
 export default function Home() {
   return (
     <main className="site-shell">
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Санжар Найманбаев — на главную">
-          SN<span>.</span>
-        </a>
+      <div className="portfolio-panel">
+        <header className="site-header">
+          <a className="brand" href="#top" aria-label="Санжар Найманбаев — на главную">
+            SN<span>.</span>
+          </a>
 
-        <nav className="main-nav" aria-label="Основная навигация">
-          <a href="#cases">Кейсы</a>
-          <a href="#process">Как я работаю</a>
-          <a href="#services">Услуги</a>
-        </nav>
+          <nav className="main-nav" aria-label="Основная навигация">
+            <a href="#cases">Кейсы</a>
+            <a href="#process">Как я работаю</a>
+            <a href="#services">Услуги</a>
+          </nav>
 
-        <a className="header-cta" href="#contact">
-          Обсудить проект <ArrowUpRight />
-        </a>
-      </header>
+          <a className="header-cta" href="#contact">
+            Обсудить проект <ArrowUpRight />
+          </a>
+        </header>
 
-      <section className="hero" id="top">
+        <section className="hero" id="top">
         <div className="hero-grid" aria-hidden="true" />
 
         <div className="hero-copy">
           <p className="eyebrow">
-            <span /> Таргетированная реклама · Meta Ads
+            <span /> Стратегия · Meta Ads · Продажи
           </p>
 
           <h1>
-            Реклама
+            Digital
             <br />
-            с фокусом
-            <br />
-            <em>на продажи</em>
+            <em>Marketer</em>
           </h1>
 
           <div className="hero-intro">
@@ -61,9 +60,9 @@ export default function Home() {
           <div className="orbit orbit-one" />
           <div className="orbit orbit-two" />
           <p className="visual-note">
-            Реклама, которая
+            Доступен для
             <br />
-            работает на бизнес
+            новых проектов
           </p>
           <img
             className="hero-portrait"
@@ -92,7 +91,8 @@ export default function Home() {
             <span>клиенты остаются надолго</span>
           </div>
         </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }
