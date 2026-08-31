@@ -154,7 +154,7 @@ export default function CasesSection() {
                 onClick={(event) => openModal(study, event.currentTarget)}
                 aria-haspopup="dialog"
               >
-                Подробнее о кейсе <span aria-hidden="true">→</span>
+                Смотреть кейс <span aria-hidden="true">→</span>
               </button>
             </article>
           ))}
@@ -208,6 +208,14 @@ export default function CasesSection() {
                 </div>
               </section>
 
+              <section className="case-modal-section case-modal-proof">
+                <p className="case-modal-label">Пруфы</p>
+                <figure>
+                  <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
+                  <figcaption>{activeCase.proof.caption}</figcaption>
+                </figure>
+              </section>
+
               <section className="case-modal-section">
                 <p className="case-modal-label">Что было сделано</p>
                 <ol className="case-modal-work">
@@ -215,14 +223,6 @@ export default function CasesSection() {
                     <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>
                   ))}
                 </ol>
-              </section>
-
-              <section className="case-modal-section case-modal-proof">
-                <p className="case-modal-label">Пруфы</p>
-                <figure>
-                  <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
-                  <figcaption>{activeCase.proof.caption}</figcaption>
-                </figure>
               </section>
 
               <footer className="case-modal-footer">
