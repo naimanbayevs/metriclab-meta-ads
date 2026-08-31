@@ -78,11 +78,19 @@ const caseStudies: CaseStudy[] = [
 
 export default function CasesSection() {
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
+  const [isProofOpen, setIsProofOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLElement | null>(null);
+  const proofOpenRef = useRef(false);
+
+  const closeProof = () => {
+    proofOpenRef.current = false;
+    setIsProofOpen(false);
+  };
 
   const closeModal = () => {
+    closeProof();
     setActiveCase(null);
     window.requestAnimationFrame(() => triggerRef.current?.focus());
   };
@@ -101,7 +109,9 @@ export default function CasesSection() {
     });
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeModal();
+      if (event.key !== "Escape") return;
+      if (proofOpenRef.current) closeProof();
+      else closeModal();
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -114,7 +124,14 @@ export default function CasesSection() {
 
   const openModal = (study: CaseStudy, trigger: HTMLButtonElement) => {
     triggerRef.current = trigger;
+    closeProof();
     setActiveCase(study);
+  };
+
+  const openProof = () => {
+    if (!window.matchMedia("(max-width: 820px)").matches) return;
+    proofOpenRef.current = true;
+    setIsProofOpen(true);
   };
 
   return (
@@ -211,7 +228,9 @@ export default function CasesSection() {
               <section className="case-modal-section case-modal-proof">
                 <p className="case-modal-label">Пруфы</p>
                 <figure>
-                  <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
+                  <button className="case-proof-trigger" type="button" onClick={openProof} aria-label="Открыть пруф крупнее">
+                    <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
+                  </button>
                   <figcaption>{activeCase.proof.caption}</figcaption>
                 </figure>
               </section>
@@ -228,6 +247,15 @@ export default function CasesSection() {
               <footer className="case-modal-footer">
                 <a href="#contact" onClick={closeModal}>Обсудить похожий проект <span aria-hidden="true">↗</span></a>
               </footer>
+
+              {isProofOpen && (
+                <div className="case-proof-lightbox" role="dialog" aria-modal="true" aria-label="Увеличенный пруф" onClick={closeProof}>
+                  <button className="case-proof-lightbox-close" type="button" onClick={closeProof} aria-label="Закрыть увеличенный пруф">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <img src={activeCase.proof.src} alt={activeCase.proof.alt} onClick={(event) => event.stopPropagation()} />
+                </div>
+              )}
             </article>
           </div>,
           document.body,
