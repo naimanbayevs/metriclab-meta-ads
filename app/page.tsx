@@ -126,96 +126,66 @@ export default function Home() {
         <section className="cases-section" id="cases" aria-labelledby="cases-title">
           <div className="cases-heading">
             <div>
-              <p className="section-eyebrow"><span /> Кейсы / реальные данные</p>
-              <h2 id="cases-title">От рекламного бюджета —<br /><em>до реальной выручки.</em></h2>
+              <p className="section-eyebrow"><span /> Избранные кейсы</p>
+              <h2 id="cases-title">Результат,<br /><em>который видно.</em></h2>
             </div>
             <p className="cases-intro">
-              Два проекта, где результат измеряется не кликами и лидами,
-              а покупками, продажами и деньгами в бизнесе.
+              Не отчёт ради отчёта, а понятная связь рекламы
+              с продажами и выручкой бизнеса.
             </p>
           </div>
 
           <div className="cases-list">
-            <article className="case-card case-card-education">
-              <header className="case-card-header">
-                <div className="case-number">01</div>
-                <div className="case-tags" aria-label="Категория и период кейса">
-                  <span>Online education</span>
-                  <span>2024 → 2025</span>
-                </div>
-              </header>
-
+            <article className="case-card">
               <div className="case-card-copy">
-                <p>Paid traffic / Казахстан</p>
-                <h3>В 2 раза больше продаж —<br />при CAC ниже на 32%.</h3>
+                <div className="case-tags" aria-label="Категория и период кейса">
+                  <span>2024 → 2025</span>
+                  <span>Онлайн-курсы</span>
+                </div>
+                <p className="case-kicker">Кейс 1</p>
+                <div className="case-brief">
+                  <p>Finmaster Group — онлайн-образование в Казахстане.</p>
+                  <p><strong>Цель:</strong> масштабировать платный трафик, сохранив экономику продаж.</p>
+                  <div className="case-results" aria-label="Ключевые результаты">
+                    <span><b>+105%</b> покупок</span>
+                    <span><b>₸197 млн</b> выручка</span>
+                    <span><b>−32%</b> CAC</span>
+                  </div>
+                </div>
+                <a className="case-link" href="#contact">Обсудить похожую задачу <ArrowUpRight /></a>
               </div>
 
-              <div className="case-metrics case-metrics-light" aria-label="Результаты онлайн-образования">
-                <div><strong>₸197 млн</strong><span>выручка за 2025</span></div>
-                <div><strong>1 049</strong><span>покупок за год</span></div>
-                <div><strong>6,22%</strong><span>конверсия в покупку</span></div>
-                <div><strong>$63,8</strong><span>стоимость покупателя</span></div>
-              </div>
-
-              <div className="case-comparison" aria-label="Сравнение 2024 и 2025 годов">
-                <div className="comparison-year comparison-year-before">
-                  <span>2024</span>
-                  <strong>512 покупок</strong>
-                  <small>₸85,3 млн выручки · CAC $93,9</small>
-                </div>
-                <div className="comparison-growth" aria-hidden="true">
-                  <i /><b>+105% покупок</b><i />
-                </div>
-                <div className="comparison-year comparison-year-after">
-                  <span>2025</span>
-                  <strong>1 049 покупок</strong>
-                  <small>₸197 млн выручки · CAC $63,8</small>
-                </div>
-              </div>
-
-              <p className="case-source">
-                Результат за два сопоставимых полных года. Данные сверены по рекламной и коммерческой отчётности проекта.
-              </p>
+              <figure className="case-visual case-visual-dashboard">
+                <div className="case-visual-label">Продуктовая аналитика · 2025</div>
+                <img src="/case-online-education.png" alt="Анонимизированный отчёт по продуктам онлайн-школы" />
+                <figcaption><strong>1 049</strong><span>покупок за год</span></figcaption>
+              </figure>
             </article>
 
-            <article className="case-card case-card-football">
-              <header className="case-card-header">
-                <div className="case-number">02</div>
-                <div className="case-tags" aria-label="Категория и период кейса">
-                  <span>Детский спорт</span>
-                  <span>12 месяцев</span>
-                </div>
-              </header>
-
+            <article className="case-card">
               <div className="case-card-copy">
-                <p>Meta Ads + amoCRM / 4 кабинета</p>
-                <h3>1 848 продаж и ₸60,9 млн<br />выручки за 12 месяцев.</h3>
+                <div className="case-tags" aria-label="Категория и период кейса">
+                  <span>12 месяцев</span>
+                  <span>Детский спорт</span>
+                </div>
+                <p className="case-kicker">Кейс 2</p>
+                <div className="case-brief">
+                  <p>Сеть детских футбольных школ: Meta Ads + amoCRM.</p>
+                  <p><strong>Цель:</strong> связать четыре рекламных кабинета с продажами и выручкой в одной системе.</p>
+                  <div className="case-results" aria-label="Ключевые результаты">
+                    <span><b>1 848</b> продаж</span>
+                    <span><b>₸60,9 млн</b> выручка</span>
+                    <span><b>2,37×</b> ROAS</span>
+                  </div>
+                </div>
+                <a className="case-link" href="#contact">Обсудить похожую задачу <ArrowUpRight /></a>
               </div>
 
-              <div className="case-metrics case-metrics-dark" aria-label="Результаты сети футбольных школ">
-                <div><strong>$52,2K</strong><span>рекламный бюджет</span></div>
-                <div><strong>13 176</strong><span>новых заявок</span></div>
-                <div><strong>$28,22</strong><span>стоимость продажи</span></div>
-                <div><strong>2,37×</strong><span>blended ROAS</span></div>
-              </div>
-
-              <div className="case-funnel" aria-label="Воронка продаж футбольной школы">
-                <div><span>01</span><strong>13 176</strong><small>заявок</small></div>
-                <i><b>60,9%</b></i>
-                <div><span>02</span><strong>8 026</strong><small>квал-лидов</small></div>
-                <i><b>96%</b></i>
-                <div><span>03</span><strong>7 701</strong><small>запись на пробное</small></div>
-                <i><b>24%</b></i>
-                <div><span>04</span><strong>1 848</strong><small>продаж</small></div>
-              </div>
-
-              <div className="case-card-footer">
-                <p>
-                  Объединил расходы из Meta с квалификациями, записями,
-                  продажами и выручкой из CRM в одном дашборде.
-                </p>
-                <a href="#contact">Обсудить похожую задачу <ArrowUpRight /></a>
-              </div>
+              <figure className="case-visual case-visual-football">
+                <div className="case-visual-label">Сводный отчёт · Meta + CRM</div>
+                <img src="/case-football-school.png" alt="Отчёт по рекламе и продажам сети детских футбольных школ" />
+                <figcaption><strong>$28,22</strong><span>стоимость продажи</span></figcaption>
+              </figure>
             </article>
           </div>
         </section>
