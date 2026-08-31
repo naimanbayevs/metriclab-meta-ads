@@ -1,3 +1,5 @@
+import CasesSection from "./CasesSection";
+
 const ArrowUpRight = () => (
   <span aria-hidden="true" className="arrow-up-right">
     ↗
@@ -123,63 +125,7 @@ export default function Home() {
         </div>
         </section>
 
-        <section className="cases-section" id="cases" aria-labelledby="cases-title">
-          <div className="cases-heading">
-            <h2 id="cases-title">Мои кейсы</h2>
-          </div>
-
-          <div className="cases-list">
-            <article className="case-card">
-              <div className="case-card-copy">
-                <div className="case-tags" aria-label="Категория и период кейса">
-                  <span>2024 → 2025</span>
-                  <span>Онлайн-курсы</span>
-                </div>
-                <div className="case-brief">
-                  <p>Finmaster Group — онлайн-образование в Казахстане.</p>
-                  <p><strong>Цель:</strong> масштабировать платный трафик, сохранив экономику продаж.</p>
-                  <div className="case-results" aria-label="Ключевые результаты">
-                    <span><b>+105%</b> покупок</span>
-                    <span><b>₸197 млн</b> выручка</span>
-                    <span><b>−32%</b> CAC</span>
-                  </div>
-                </div>
-                <a className="case-link" href="#contact">Обсудить кейс <ArrowUpRight /></a>
-              </div>
-
-              <figure className="case-visual case-visual-dashboard">
-                <div className="case-visual-label">Продуктовая аналитика · 2025</div>
-                <img src="/case-online-education.png" alt="Анонимизированный отчёт по продуктам онлайн-школы" />
-                <figcaption><strong>1 049</strong><span>покупок за год</span></figcaption>
-              </figure>
-            </article>
-
-            <article className="case-card">
-              <div className="case-card-copy">
-                <div className="case-tags" aria-label="Категория и период кейса">
-                  <span>12 месяцев</span>
-                  <span>Детский спорт</span>
-                </div>
-                <div className="case-brief">
-                  <p>Сеть детских футбольных школ: Meta Ads + amoCRM.</p>
-                  <p><strong>Цель:</strong> связать четыре рекламных кабинета с продажами и выручкой в одной системе.</p>
-                  <div className="case-results" aria-label="Ключевые результаты">
-                    <span><b>1 848</b> продаж</span>
-                    <span><b>₸60,9 млн</b> выручка</span>
-                    <span><b>2,37×</b> ROAS</span>
-                  </div>
-                </div>
-                <a className="case-link" href="#contact">Обсудить кейс <ArrowUpRight /></a>
-              </div>
-
-              <figure className="case-visual case-visual-football">
-                <div className="case-visual-label">Сводный отчёт · Meta + CRM</div>
-                <img src="/case-football-school.png" alt="Отчёт по рекламе и продажам сети детских футбольных школ" />
-                <figcaption><strong>$28,22</strong><span>стоимость продажи</span></figcaption>
-              </figure>
-            </article>
-          </div>
-        </section>
+        <CasesSection />
       </div>
     </main>
   );
