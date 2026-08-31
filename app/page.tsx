@@ -125,14 +125,7 @@ export default function Home() {
 
         <section className="cases-section" id="cases" aria-labelledby="cases-title">
           <div className="cases-heading">
-            <div>
-              <p className="section-eyebrow"><span /> Избранные кейсы</p>
-              <h2 id="cases-title">Результат,<br /><em>который видно.</em></h2>
-            </div>
-            <p className="cases-intro">
-              Не отчёт ради отчёта, а понятная связь рекламы
-              с продажами и выручкой бизнеса.
-            </p>
+            <h2 id="cases-title">Мои кейсы</h2>
           </div>
 
           <div className="cases-list">
@@ -142,7 +135,6 @@ export default function Home() {
                   <span>2024 → 2025</span>
                   <span>Онлайн-курсы</span>
                 </div>
-                <p className="case-kicker">Кейс 1</p>
                 <div className="case-brief">
                   <p>Finmaster Group — онлайн-образование в Казахстане.</p>
                   <p><strong>Цель:</strong> масштабировать платный трафик, сохранив экономику продаж.</p>
@@ -152,7 +144,7 @@ export default function Home() {
                     <span><b>−32%</b> CAC</span>
                   </div>
                 </div>
-                <a className="case-link" href="#contact">Обсудить похожую задачу <ArrowUpRight /></a>
+                <a className="case-link" href="#contact">Обсудить кейс <ArrowUpRight /></a>
               </div>
 
               <figure className="case-visual case-visual-dashboard">
@@ -168,7 +160,6 @@ export default function Home() {
                   <span>12 месяцев</span>
                   <span>Детский спорт</span>
                 </div>
-                <p className="case-kicker">Кейс 2</p>
                 <div className="case-brief">
                   <p>Сеть детских футбольных школ: Meta Ads + amoCRM.</p>
                   <p><strong>Цель:</strong> связать четыре рекламных кабинета с продажами и выручкой в одной системе.</p>
@@ -178,7 +169,7 @@ export default function Home() {
                     <span><b>2,37×</b> ROAS</span>
                   </div>
                 </div>
-                <a className="case-link" href="#contact">Обсудить похожую задачу <ArrowUpRight /></a>
+                <a className="case-link" href="#contact">Обсудить кейс <ArrowUpRight /></a>
               </div>
 
               <figure className="case-visual case-visual-football">
