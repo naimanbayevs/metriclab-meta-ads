@@ -987,15 +987,15 @@ h1 em { color: #e8e8e4; font-style: normal; }
   .case-modal-close:focus-visible { outline: none; border-color: var(--orange); }
 
   .case-modal-tags { gap: 7px 14px; font-size: 9px; }
-  .case-modal-header h2 { margin-top: 16px; font-size: clamp(36px, 9.5vw, 40px); line-height: 1; }
-  .case-modal-header > p { max-width: 38rem; margin-top: 16px; font-size: 18px; line-height: 1.5; }
+  .case-modal-header h2 { margin-top: 16px; font-size: 32px; line-height: 1.05; }
+  .case-modal-header > p { max-width: 38rem; margin-top: 16px; font-size: 14px; line-height: 1.5; }
   .case-modal-section { margin-top: 24px; padding-top: 16px; }
   .case-modal-label { margin-bottom: 16px; }
-  .case-modal-task > p:last-child { max-width: 38rem; font-size: 24px; line-height: 1.28; }
+  .case-modal-task > p:last-child { max-width: 38rem; font-size: 18px; line-height: 1.35; }
   .case-modal-results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .case-modal-results > div { padding: 8px 0 0; }
   .case-modal-main-result { grid-column: 1 / -1; }
-  .case-modal-main-result strong { font-size: 48px; }
+  .case-modal-main-result strong { font-size: 40px; }
   .case-modal-metric {
     display: flex;
     flex-direction: column;
