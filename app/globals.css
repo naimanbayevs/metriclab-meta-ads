@@ -585,6 +585,8 @@ h1 em { color: #e8e8e4; font-style: normal; }
   line-height: .98;
 }
 
+.case-modal-education .case-modal-header h2 { font-size: clamp(40px, 4vw, 52px); }
+
 .case-modal-header > p {
   max-width: 760px;
   margin: 24px 0 0;
@@ -637,7 +639,7 @@ h1 em { color: #e8e8e4; font-style: normal; }
 .case-modal-metric span { margin-top: 10px; color: #a8a9a3; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
 .case-modal-metric strong { font-size: clamp(26px, 3vw, 38px); letter-spacing: -.05em; line-height: 1; }
 .case-modal-metric { min-height: 104px; }
-.case-modal-results-finmaster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.case-modal-results-education { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 .case-year-grid {
   display: grid;
@@ -743,6 +745,14 @@ h1 em { color: #e8e8e4; font-style: normal; }
 .case-proof-trigger { display: block; width: 100%; padding: 0; border: 0; background: transparent; }
 .case-modal-proof img { display: block; width: 100%; height: auto; border-radius: 10px; background: #f2f2ee; }
 .case-modal-proof figcaption { margin-top: 16px; color: #94958f; font-size: 12px; }
+.case-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.case-proof-card > p { min-height: 2.7em; margin: 0 0 12px; color: var(--orange); font-size: 9px; font-weight: 800; letter-spacing: .12em; line-height: 1.35; text-transform: uppercase; }
+.case-proof-slot { display: grid; width: 100%; aspect-ratio: 16 / 10; place-items: center; border-radius: 10px; background: rgba(255,255,255,.055); color: #777872; }
+.case-proof-slot span { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.case-proof-card figcaption strong,
+.case-proof-card figcaption span { display: block; }
+.case-proof-card figcaption strong { color: #f1f1ed; font-size: 24px; font-weight: 600; letter-spacing: -.045em; line-height: 1; }
+.case-proof-card figcaption span { margin-top: 7px; color: #94958f; font-size: 8px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
 
 .case-modal-footer {
   display: flex;
@@ -1071,6 +1081,7 @@ h1 em { color: #e8e8e4; font-style: normal; }
 
   .case-modal-tags { gap: 7px 14px; font-size: 9px; }
   .case-modal-header h2 { margin-top: 16px; font-size: 32px; line-height: 1.05; }
+  .case-modal-education .case-modal-header h2 { font-size: 32px; }
   .case-modal-header > p { max-width: 38rem; margin-top: 16px; font-size: 14px; line-height: 1.5; }
   .case-modal-section { margin-top: 24px; padding-top: 16px; border-top: 0; }
   .case-modal-label { margin-bottom: 16px; }
@@ -1102,6 +1113,11 @@ h1 em { color: #e8e8e4; font-style: normal; }
   .case-year-metrics { gap: 12px 16px; margin-top: 18px; }
   .case-year-metrics dt { font-size: 8px; }
   .case-year-metrics dd { font-size: 15px; }
+  .case-proof-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .case-proof-card > p { min-height: 0; margin-bottom: 10px; }
+  .case-proof-slot { border-radius: 7px; }
+  .case-proof-card figcaption { margin-top: 10px; }
+  .case-proof-card figcaption strong { font-size: 23px; }
   .case-comparison-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .case-comparison-grid strong { font-size: 23px; }
   .case-comparison-grid span { font-size: 8px; }

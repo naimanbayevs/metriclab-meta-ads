@@ -12,11 +12,20 @@ type CaseYear = {
   metrics: CaseMetric[];
 };
 
+type CaseProof = {
+  title: string;
+  src: string | null;
+  alt: string;
+  amount: string;
+  label: string;
+};
+
 type CaseStudy = {
   id: string;
   category: string;
   period: string;
   client: string;
+  modalTitle?: string;
   description: string;
   task: string;
   primary: CaseMetric;
@@ -25,23 +34,25 @@ type CaseStudy = {
   yearly?: CaseYear[];
   comparison?: CaseMetric[];
   work: string[];
-  proof: { src: string; alt: string; caption: string };
+  proof?: { src: string; alt: string; caption: string };
+  proofs?: CaseProof[];
 };
 
 const caseStudies: CaseStudy[] = [
   {
-    id: "finmaster",
-    category: "Онлайн-курсы",
+    id: "education",
+    category: "Профессиональное обучение",
     period: "2024 — 2026",
-    client: "Finmaster Group",
-    description: "Finmaster Group — онлайн-образование в Казахстане. Платный трафик был одним из ключевых каналов продаж, а работа велась последовательно в 2024, 2025 и первой половине 2026 года.",
-    task: "Масштабировать рекламные кампании и увеличить объём покупок, не ухудшая стоимость привлечения клиента.",
+    client: "Образовательная компания для бухгалтеров и бизнеса",
+    modalTitle: "Профессиональное обучение в сфере финансов",
+    description: "Компания в сфере профессионального образования для бухгалтеров, кадровых специалистов и бизнеса. Работа с платным трафиком велась по нескольким образовательным продуктам в 2024–2026 годах.",
+    task: "Масштабировать привлечение клиентов на несколько образовательных продуктов, сохраняя контролируемую стоимость продажи.",
     primary: { value: "₸441 млн+", label: "выручки" },
     secondary: [
       { value: "2 521", label: "продажа" },
+      { value: "−32%", label: "CPA продажи · 2025 vs 2024" },
     ],
-    fullMetrics: [
-    ],
+    fullMetrics: [],
     yearly: [
       {
         period: "2024",
@@ -87,16 +98,23 @@ const caseStudies: CaseStudy[] = [
         ],
       },
     ],
+    comparison: [
+      { value: "+39%", label: "рекламный бюджет" },
+      { value: "+26%", label: "лиды" },
+      { value: "+105%", label: "продажи" },
+      { value: "≈ +131%", label: "выручка" },
+      { value: "−32%", label: "CPA продажи" },
+    ],
     work: [
       "Перестроена структура платного трафика по продуктам и этапам воронки.",
       "Рекламные данные связаны с покупками и фактической выручкой.",
       "Масштабирование велось с постоянным контролем CAC и конверсии в покупку.",
     ],
-    proof: {
-      src: "/case-online-education.png",
-      alt: "Анонимизированный продуктовый отчёт онлайн-школы",
-      caption: "Анонимизированный продуктовый отчёт за 2025 год",
-    },
+    proofs: [
+      { title: "Затраты · 2024", src: null, alt: "Скриншот рекламных расходов за 2024 год", amount: "$48 091", label: "рекламные расходы" },
+      { title: "Затраты · 2025", src: null, alt: "Скриншот рекламных расходов за 2025 год", amount: "$66 902", label: "рекламные расходы" },
+      { title: "Затраты · 2026 · январь–июнь", src: null, alt: "Скриншот рекламных расходов за январь–июнь 2026 года", amount: "$67 182", label: "рекламные расходы" },
+    ],
   },
   {
     id: "football",
@@ -130,7 +148,7 @@ const caseStudies: CaseStudy[] = [
 
 export default function CasesSection() {
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
-  const [isProofOpen, setIsProofOpen] = useState(false);
+  const [openProofImage, setOpenProofImage] = useState<{ src: string; alt: string } | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLElement | null>(null);
@@ -138,7 +156,7 @@ export default function CasesSection() {
 
   const closeProof = () => {
     proofOpenRef.current = false;
-    setIsProofOpen(false);
+    setOpenProofImage(null);
   };
 
   const closeModal = () => {
@@ -180,10 +198,10 @@ export default function CasesSection() {
     setActiveCase(study);
   };
 
-  const openProof = () => {
+  const openProof = (src: string, alt: string) => {
     if (!window.matchMedia("(max-width: 820px)").matches) return;
     proofOpenRef.current = true;
-    setIsProofOpen(true);
+    setOpenProofImage({ src, alt });
   };
 
   return (
@@ -237,7 +255,7 @@ export default function CasesSection() {
           }}>
             <article
               ref={modalRef}
-              className="case-modal"
+              className={`case-modal case-modal-${activeCase.id}`}
               role="dialog"
               aria-modal="true"
               aria-labelledby={`case-modal-${activeCase.id}`}
@@ -252,7 +270,7 @@ export default function CasesSection() {
                   <span>{activeCase.category}</span>
                   <span>{activeCase.period}</span>
                 </div>
-                <h2 id={`case-modal-${activeCase.id}`}>{activeCase.client}</h2>
+                <h2 id={`case-modal-${activeCase.id}`}>{activeCase.modalTitle ?? activeCase.client}</h2>
                 <p id={`case-modal-description-${activeCase.id}`}>{activeCase.description}</p>
               </header>
 
@@ -295,23 +313,21 @@ export default function CasesSection() {
                 </section>
               )}
 
-              {activeCase.id !== "finmaster" && (
-                <section className="case-modal-section">
-                  <p className="case-modal-label">Ключевые результаты</p>
-                  <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
-                    <div className="case-modal-main-result">
-                      <strong>{activeCase.primary.value}</strong>
-                      <span>{activeCase.primary.label}</span>
-                    </div>
-                    {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
-                      <div className="case-modal-metric" key={metric.label}>
-                        <strong>{metric.value}</strong>
-                        <span>{metric.label}</span>
-                      </div>
-                    ))}
+              <section className="case-modal-section">
+                <p className="case-modal-label">Ключевые результаты</p>
+                <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
+                  <div className="case-modal-main-result">
+                    <strong>{activeCase.primary.value}</strong>
+                    <span>{activeCase.primary.label}</span>
                   </div>
-                </section>
-              )}
+                  {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
+                    <div className="case-modal-metric" key={metric.label}>
+                      <strong>{metric.value}</strong>
+                      <span>{metric.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
               {activeCase.comparison && (
                 <section className="case-modal-section case-comparison-section">
@@ -329,12 +345,30 @@ export default function CasesSection() {
 
               <section className="case-modal-section case-modal-proof">
                 <p className="case-modal-label">Пруфы</p>
-                <figure>
-                  <button className="case-proof-trigger" type="button" onClick={openProof} aria-label="Открыть пруф крупнее">
-                    <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
-                  </button>
-                  <figcaption>{activeCase.proof.caption}</figcaption>
-                </figure>
+                {activeCase.proofs ? (
+                  <div className="case-proof-grid">
+                    {activeCase.proofs.map((proof) => (
+                      <figure className="case-proof-card" key={proof.title}>
+                        <p>{proof.title}</p>
+                        {proof.src ? (
+                          <button className="case-proof-trigger" type="button" onClick={() => openProof(proof.src!, proof.alt)} aria-label={`Открыть крупнее: ${proof.title}`}>
+                            <img src={proof.src} alt={proof.alt} />
+                          </button>
+                        ) : (
+                          <div className="case-proof-slot" role="img" aria-label={proof.alt}><span>Место для скриншота</span></div>
+                        )}
+                        <figcaption><strong>{proof.amount}</strong><span>{proof.label}</span></figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : activeCase.proof ? (
+                  <figure>
+                    <button className="case-proof-trigger" type="button" onClick={() => openProof(activeCase.proof!.src, activeCase.proof!.alt)} aria-label="Открыть пруф крупнее">
+                      <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
+                    </button>
+                    <figcaption>{activeCase.proof.caption}</figcaption>
+                  </figure>
+                ) : null}
               </section>
 
               <section className="case-modal-section">
@@ -350,12 +384,12 @@ export default function CasesSection() {
                 <a href="#contact" onClick={closeModal}>Обсудить похожий проект <span aria-hidden="true">↗</span></a>
               </footer>
 
-              {isProofOpen && (
+              {openProofImage && (
                 <div className="case-proof-lightbox" role="dialog" aria-modal="true" aria-label="Увеличенный пруф" onClick={closeProof}>
                   <button className="case-proof-lightbox-close" type="button" onClick={closeProof} aria-label="Закрыть увеличенный пруф">
                     <span aria-hidden="true">×</span>
                   </button>
-                  <img src={activeCase.proof.src} alt={activeCase.proof.alt} onClick={(event) => event.stopPropagation()} />
+                  <img src={openProofImage.src} alt={openProofImage.alt} onClick={(event) => event.stopPropagation()} />
                 </div>
               )}
             </article>
