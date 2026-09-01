@@ -50,7 +50,7 @@ const caseStudies: CaseStudy[] = [
     primary: { value: "₸441 млн+", label: "выручки" },
     secondary: [
       { value: "2 521", label: "продажа" },
-      { value: "−32%", label: "стоимость продажи · 2025 vs 2024" },
+      { value: "$63,78", label: "стоимость продажи" },
     ],
     fullMetrics: [],
     yearly: [
