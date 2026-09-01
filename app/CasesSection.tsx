@@ -41,9 +41,7 @@ const caseStudies: CaseStudy[] = [
       { value: "2 521", label: "продажа" },
     ],
     fullMetrics: [
-      { value: "+105%", label: "продаж · 2025 vs 2024" },
       { value: "−32%", label: "CPA продажи · 2025 vs 2024" },
-      { value: "8,23%", label: "конверсия лид → продажа · 2026 · январь–июнь" },
     ],
     yearly: [
       {
@@ -96,7 +94,6 @@ const caseStudies: CaseStudy[] = [
       { value: "+105%", label: "продажи" },
       { value: "≈ +131%", label: "выручка" },
       { value: "−32%", label: "CPA продажи" },
-      { value: "3,84% → 6,22%", label: "конверсия лид → продажа" },
     ],
     work: [
       "Перестроена структура платного трафика по продуктам и этапам воронки.",
