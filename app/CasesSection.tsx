@@ -98,13 +98,6 @@ const caseStudies: CaseStudy[] = [
         ],
       },
     ],
-    comparison: [
-      { value: "+39%", label: "рекламный бюджет" },
-      { value: "+26%", label: "лиды" },
-      { value: "+105%", label: "продажи" },
-      { value: "≈ +131%", label: "выручка" },
-      { value: "−32%", label: "стоимость продажи" },
-    ],
     work: [
       "Перестроена структура платного трафика по продуктам и этапам воронки.",
       "Рекламные данные связаны с покупками и фактической выручкой.",
@@ -313,21 +306,23 @@ export default function CasesSection() {
                 </section>
               )}
 
-              <section className="case-modal-section">
-                <p className="case-modal-label">Ключевые результаты</p>
-                <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
-                  <div className="case-modal-main-result">
-                    <strong>{activeCase.primary.value}</strong>
-                    <span>{activeCase.primary.label}</span>
-                  </div>
-                  {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
-                    <div className="case-modal-metric" key={metric.label}>
-                      <strong>{metric.value}</strong>
-                      <span>{metric.label}</span>
+              {activeCase.id !== "education" && (
+                <section className="case-modal-section">
+                  <p className="case-modal-label">Ключевые результаты</p>
+                  <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
+                    <div className="case-modal-main-result">
+                      <strong>{activeCase.primary.value}</strong>
+                      <span>{activeCase.primary.label}</span>
                     </div>
-                  ))}
-                </div>
-              </section>
+                    {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
+                      <div className="case-modal-metric" key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {activeCase.comparison && (
                 <section className="case-modal-section case-comparison-section">
