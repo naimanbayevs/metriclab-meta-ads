@@ -16,8 +16,15 @@ type CaseProof = {
   title: string;
   src: string | null;
   alt: string;
-  amount: string;
-  label: string;
+  amount?: string;
+  label?: string;
+  caption?: string;
+};
+
+type CaseStage = {
+  title: string;
+  note?: string;
+  metrics: CaseMetric[];
 };
 
 type CaseStudy = {
@@ -26,13 +33,18 @@ type CaseStudy = {
   period: string;
   client: string;
   modalTitle?: string;
+  startNote?: string;
   description: string;
   task: string;
   primary: CaseMetric;
   secondary: CaseMetric[];
   fullMetrics: CaseMetric[];
+  modalPrimaryLabel?: string;
+  modalMetrics?: CaseMetric[];
   yearly?: CaseYear[];
   comparison?: CaseMetric[];
+  stages?: CaseStage[];
+  summary?: string;
   work: string[];
   proof?: { src: string; alt: string; caption: string };
   proofs?: CaseProof[];
@@ -137,6 +149,54 @@ const caseStudies: CaseStudy[] = [
       caption: "Сводный отчёт по Meta Ads и данным CRM",
     },
   },
+  {
+    id: "jewelry",
+    category: "Ювелирный e-commerce",
+    period: "2024 — 2026",
+    client: "Бренд украшений из серебра",
+    startNote: "Начало сотрудничества — ноябрь 2024 года.",
+    description: "Новый e-commerce бренд украшений из серебра. На момент начала работы рекламные кампании запускались практически с нуля, а у бренда ещё не было сформированной аудитории в социальных сетях.",
+    task: "Построить стабильный канал продаж через платный трафик и постепенно масштабировать рекламный бюджет без потери окупаемости.",
+    primary: { value: "7×+", label: "ROAS" },
+    secondary: [
+      { value: "$45K+", label: "рекламных расходов" },
+      { value: "×10", label: "масштаб бюджета" },
+    ],
+    fullMetrics: [
+      { value: "0 → 94K", label: "рост аудитории бренда" },
+    ],
+    modalPrimaryLabel: "ROAS при масштабировании",
+    modalMetrics: [
+      { value: "×10", label: "масштаб бюджета", detail: "$10 → $100 / день" },
+      { value: "$45K+", label: "инвестировано в рекламу" },
+      { value: "0 → 94K", label: "рост аудитории бренда" },
+    ],
+    stages: [
+      {
+        title: "Точка А",
+        note: "Ноябрь 2024",
+        metrics: [
+          { value: "$10 / день", label: "рекламный бюджет" },
+          { value: "0", label: "подписчиков" },
+          { value: "Новый бренд", label: "без сформированной аудитории" },
+        ],
+      },
+      {
+        title: "Текущий результат",
+        metrics: [
+          { value: "$100 / день", label: "текущий рекламный бюджет" },
+          { value: "7×+", label: "ROAS" },
+          { value: "94 000", label: "подписчиков" },
+          { value: "$45 000+", label: "рекламных расходов за период" },
+        ],
+      },
+    ],
+    summary: "За время сотрудничества рекламный бюджет был масштабирован с $10 до $100 в день. При этом реклама сохраняет ROAS от 7×. За период в платный трафик инвестировано около $45 тыс., а аудитория бренда выросла с нуля до 94 тыс. подписчиков.",
+    work: [],
+    proofs: [
+      { title: "", src: null, alt: "Скриншот рекламного кабинета ювелирного e-commerce бренда", caption: "Скриншот рекламного кабинета" },
+    ],
+  },
 ];
 
 export default function CasesSection() {
@@ -146,6 +206,7 @@ export default function CasesSection() {
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLElement | null>(null);
   const proofOpenRef = useRef(false);
+  const visibleModalMetrics = activeCase?.modalMetrics ?? (activeCase ? [...activeCase.secondary, ...activeCase.fullMetrics] : []);
 
   const closeProof = () => {
     proofOpenRef.current = false;
@@ -265,6 +326,7 @@ export default function CasesSection() {
                 </div>
                 <h2 id={`case-modal-${activeCase.id}`}>{activeCase.modalTitle ?? activeCase.client}</h2>
                 <p id={`case-modal-description-${activeCase.id}`}>{activeCase.description}</p>
+                {activeCase.startNote && <p className="case-modal-start-note">{activeCase.startNote}</p>}
               </header>
 
               <section className="case-modal-section case-modal-task">
@@ -306,18 +368,50 @@ export default function CasesSection() {
                 </section>
               )}
 
+              {activeCase.stages && (
+                <section className="case-modal-section case-stage-section">
+                  <div className="case-stage-grid">
+                    {activeCase.stages.map((stage) => (
+                      <article className="case-stage" key={stage.title}>
+                        <header className="case-stage-heading">
+                          <strong>{stage.title}</strong>
+                          {stage.note && <span>{stage.note}</span>}
+                        </header>
+                        <div className="case-stage-metrics">
+                          {stage.metrics.map((metric) => (
+                            <div key={metric.label}>
+                              <strong>{metric.value}</strong>
+                              <span>{metric.label}</span>
+                              {metric.detail && <small>{metric.detail}</small>}
+                            </div>
+                          ))}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {activeCase.summary && (
+                <section className="case-modal-section case-modal-summary">
+                  <p className="case-modal-label">Итог</p>
+                  <p>{activeCase.summary}</p>
+                </section>
+              )}
+
               {activeCase.id !== "education" && (
                 <section className="case-modal-section">
                   <p className="case-modal-label">Ключевые результаты</p>
-                  <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
+                  <div className={`case-modal-results case-modal-results-${activeCase.id} ${visibleModalMetrics.length % 2 ? "has-odd-metrics" : ""}`}>
                     <div className="case-modal-main-result">
                       <strong>{activeCase.primary.value}</strong>
-                      <span>{activeCase.primary.label}</span>
+                      <span>{activeCase.modalPrimaryLabel ?? activeCase.primary.label}</span>
                     </div>
-                    {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
+                    {visibleModalMetrics.map((metric) => (
                       <div className="case-modal-metric" key={metric.label}>
                         <strong>{metric.value}</strong>
                         <span>{metric.label}</span>
+                        {metric.detail && <small>{metric.detail}</small>}
                       </div>
                     ))}
                   </div>
@@ -339,12 +433,13 @@ export default function CasesSection() {
               )}
 
               <section className="case-modal-section case-modal-proof">
-                {activeCase.id !== "education" && <p className="case-modal-label">Пруфы</p>}
+                {activeCase.id === "jewelry" && <p className="case-modal-label">Пруф</p>}
+                {activeCase.id !== "education" && activeCase.id !== "jewelry" && <p className="case-modal-label">Пруфы</p>}
                 {activeCase.proofs ? (
                   <div className="case-proof-grid">
                     {activeCase.proofs.map((proof) => (
-                      <figure className="case-proof-card" key={proof.title}>
-                        <p>{proof.title}</p>
+                      <figure className="case-proof-card" key={proof.title || proof.alt}>
+                        {proof.title && <p>{proof.title}</p>}
                         {proof.src ? (
                           <button className="case-proof-trigger" type="button" onClick={() => openProof(proof.src!, proof.alt)} aria-label={`Открыть крупнее: ${proof.title}`}>
                             <img src={proof.src} alt={proof.alt} />
@@ -352,7 +447,11 @@ export default function CasesSection() {
                         ) : (
                           <div className="case-proof-slot" role="img" aria-label={proof.alt}><span>Место для скриншота</span></div>
                         )}
-                        <figcaption><strong>{proof.amount}</strong><span>{proof.label}</span></figcaption>
+                        <figcaption>
+                          {proof.amount && <strong>{proof.amount}</strong>}
+                          {proof.label && <span>{proof.label}</span>}
+                          {proof.caption && <span>{proof.caption}</span>}
+                        </figcaption>
                       </figure>
                     ))}
                   </div>
@@ -366,14 +465,16 @@ export default function CasesSection() {
                 ) : null}
               </section>
 
-              <section className="case-modal-section">
-                <p className="case-modal-label">Что было сделано</p>
-                <ol className="case-modal-work">
-                  {activeCase.work.map((item, index) => (
-                    <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>
-                  ))}
-                </ol>
-              </section>
+              {activeCase.work.length > 0 && (
+                <section className="case-modal-section">
+                  <p className="case-modal-label">Что было сделано</p>
+                  <ol className="case-modal-work">
+                    {activeCase.work.map((item, index) => (
+                      <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>
+                    ))}
+                  </ol>
+                </section>
+              )}
 
               <footer className="case-modal-footer">
                 <a href="#contact" onClick={closeModal}>Обсудить похожий проект <span aria-hidden="true">↗</span></a>
