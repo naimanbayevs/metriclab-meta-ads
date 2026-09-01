@@ -41,7 +41,6 @@ const caseStudies: CaseStudy[] = [
       { value: "2 521", label: "продажа" },
     ],
     fullMetrics: [
-      { value: "−32%", label: "CPA продажи · 2025 vs 2024" },
     ],
     yearly: [
       {
@@ -68,7 +67,7 @@ const caseStudies: CaseStudy[] = [
           { value: "$66 902", label: "рекламный бюджет" },
           { value: "16 855", label: "лиды" },
           { value: "$3,97", label: "CPL" },
-          { value: "$63,78", label: "CPA продажи" },
+          { value: "$63,78", label: "CPA продажи", detail: "−32% vs 2024" },
           { value: "6,22%", label: "конверсия лид → продажа" },
         ],
       },
@@ -77,7 +76,7 @@ const caseStudies: CaseStudy[] = [
         note: "Январь–июнь",
         highlights: [
           { value: "960", label: "продаж" },
-          { value: "₸158,8 млн", label: "выручки", detail: "₸158 829 300" },
+          { value: "₸158,8 млн", label: "выручки" },
         ],
         metrics: [
           { value: "$67 182,10", label: "рекламный бюджет" },
@@ -87,13 +86,6 @@ const caseStudies: CaseStudy[] = [
           { value: "8,23%", label: "конверсия лид → продажа" },
         ],
       },
-    ],
-    comparison: [
-      { value: "+39%", label: "рекламный бюджет" },
-      { value: "+26%", label: "лиды" },
-      { value: "+105%", label: "продажи" },
-      { value: "≈ +131%", label: "выручка" },
-      { value: "−32%", label: "CPA продажи" },
     ],
     work: [
       "Перестроена структура платного трафика по продуктам и этапам воронки.",
@@ -293,6 +285,7 @@ export default function CasesSection() {
                             <div key={metric.label}>
                               <dt>{metric.label}</dt>
                               <dd>{metric.value}</dd>
+                              {metric.detail && <small>{metric.detail}</small>}
                             </div>
                           ))}
                         </dl>
@@ -302,21 +295,23 @@ export default function CasesSection() {
                 </section>
               )}
 
-              <section className="case-modal-section">
-                <p className="case-modal-label">Ключевые результаты</p>
-                <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
-                  <div className="case-modal-main-result">
-                    <strong>{activeCase.primary.value}</strong>
-                    <span>{activeCase.primary.label}</span>
-                  </div>
-                  {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
-                    <div className="case-modal-metric" key={metric.label}>
-                      <strong>{metric.value}</strong>
-                      <span>{metric.label}</span>
+              {activeCase.id !== "finmaster" && (
+                <section className="case-modal-section">
+                  <p className="case-modal-label">Ключевые результаты</p>
+                  <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
+                    <div className="case-modal-main-result">
+                      <strong>{activeCase.primary.value}</strong>
+                      <span>{activeCase.primary.label}</span>
                     </div>
-                  ))}
-                </div>
-              </section>
+                    {[...activeCase.secondary, ...activeCase.fullMetrics].map((metric) => (
+                      <div className="case-modal-metric" key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {activeCase.comparison && (
                 <section className="case-modal-section case-comparison-section">
