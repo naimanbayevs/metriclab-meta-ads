@@ -339,7 +339,7 @@ export default function CasesSection() {
               )}
 
               <section className="case-modal-section case-modal-proof">
-                <p className="case-modal-label">Пруфы</p>
+                {activeCase.id !== "education" && <p className="case-modal-label">Пруфы</p>}
                 {activeCase.proofs ? (
                   <div className="case-proof-grid">
                     {activeCase.proofs.map((proof) => (
