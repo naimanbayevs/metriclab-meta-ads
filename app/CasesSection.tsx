@@ -78,7 +78,7 @@ const caseStudies: CaseStudy[] = [
           { value: "$66 902", label: "рекламный бюджет" },
           { value: "16 855", label: "лиды" },
           { value: "$3,97", label: "CPL" },
-          { value: "$63,78", label: "стоимость продажи", detail: "−32% vs 2024" },
+          { value: "$63,78", label: "стоимость продажи" },
           { value: "6,22%", label: "конверсия лид → продажа" },
         ],
       },
