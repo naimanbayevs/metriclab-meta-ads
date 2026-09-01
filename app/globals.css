@@ -457,6 +457,8 @@ h1 em { color: #e8e8e4; font-style: normal; }
   border-top: 1px solid rgba(255,255,255,.12);
 }
 
+.case-secondary-results > div:only-child { grid-column: 1 / -1; }
+
 .case-secondary-results strong {
   color: #f1f1ed;
   font-size: clamp(24px, 2.6vw, 32px);
@@ -635,6 +637,85 @@ h1 em { color: #e8e8e4; font-style: normal; }
 .case-modal-metric span { margin-top: 10px; color: #a8a9a3; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
 .case-modal-metric strong { font-size: clamp(26px, 3vw, 38px); letter-spacing: -.05em; line-height: 1; }
 .case-modal-metric { min-height: 104px; }
+.case-modal-results-finmaster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.case-year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.case-year { min-width: 0; }
+
+.case-year-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+}
+
+.case-year-heading strong {
+  color: var(--orange);
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -.045em;
+  line-height: 1;
+}
+
+.case-year-heading span,
+.case-year-highlight span,
+.case-year-metrics dt,
+.case-comparison-grid span {
+  color: #9fa09a;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .11em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.case-year-highlights {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.case-year-highlight strong,
+.case-year-highlight span,
+.case-year-highlight small { display: block; }
+
+.case-year-highlight strong {
+  color: #f1f1ed;
+  font-size: clamp(27px, 2.7vw, 36px);
+  font-weight: 600;
+  letter-spacing: -.055em;
+  line-height: 1;
+}
+
+.case-year-highlight span { margin-top: 7px; }
+.case-year-highlight small { margin-top: 5px; color: #858680; font-size: 10px; letter-spacing: .04em; }
+
+.case-year-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 18px;
+  margin: 24px 0 0;
+}
+
+.case-year-metrics div { min-width: 0; }
+.case-year-metrics dt { margin: 0; }
+.case-year-metrics dd { margin: 5px 0 0; color: #d6d7d1; font-size: 16px; font-weight: 550; line-height: 1.1; }
+
+.case-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px 28px;
+}
+
+.case-comparison-grid strong,
+.case-comparison-grid span { display: block; }
+.case-comparison-grid strong { font-size: 25px; font-weight: 600; letter-spacing: -.045em; line-height: 1; }
+.case-comparison-grid span { margin-top: 7px; }
 
 .case-modal-work {
   display: grid;
@@ -960,6 +1041,7 @@ h1 em { color: #e8e8e4; font-style: normal; }
     border-top: 0;
     border-bottom: 0;
   }
+  .case-secondary-results > div:only-child { min-height: 54px; }
   .case-secondary-results strong { font-size: clamp(24px, 7.4vw, 28px); }
   .case-secondary-results span { margin-top: 5px; font-size: 9px; line-height: 1.4; letter-spacing: .09em; }
   .case-details-button { min-height: 36px; padding-top: 8px; border-top: 0; font-size: 12px; }
@@ -1006,10 +1088,22 @@ h1 em { color: #e8e8e4; font-style: normal; }
     border-top: 0;
     border-bottom: 0;
   }
-  .case-modal-metric:last-child { grid-column: 1 / -1; }
+  .case-modal-results.has-odd-metrics .case-modal-metric:last-child { grid-column: 1 / -1; }
   .case-modal-metric strong { font-size: 27px; }
   .case-modal-main-result span,
   .case-modal-metric span { margin-top: 6px; font-size: 8px; }
+  .case-year-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .case-year-heading strong { font-size: 26px; }
+  .case-year-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+  .case-year-highlight strong { font-size: 27px; }
+  .case-year-highlight span { margin-top: 6px; font-size: 8px; }
+  .case-year-highlight small { font-size: 9px; }
+  .case-year-metrics { gap: 12px 16px; margin-top: 18px; }
+  .case-year-metrics dt { font-size: 8px; }
+  .case-year-metrics dd { font-size: 15px; }
+  .case-comparison-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .case-comparison-grid strong { font-size: 23px; }
+  .case-comparison-grid span { font-size: 8px; }
   .case-modal-work li { grid-template-columns: 32px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 0; font-size: 16px; line-height: 1.45; }
   .case-proof-trigger { cursor: zoom-in; }
   .case-modal-proof img { width: 100%; border-radius: 7px; }

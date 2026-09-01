@@ -3,6 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+type CaseMetric = { value: string; label: string; detail?: string };
+
+type CaseYear = {
+  period: string;
+  note?: string;
+  highlights: CaseMetric[];
+  metrics: CaseMetric[];
+};
+
 type CaseStudy = {
   id: string;
   category: string;
@@ -10,9 +19,11 @@ type CaseStudy = {
   client: string;
   description: string;
   task: string;
-  primary: { value: string; label: string };
-  secondary: Array<{ value: string; label: string }>;
-  fullMetrics: Array<{ value: string; label: string }>;
+  primary: CaseMetric;
+  secondary: CaseMetric[];
+  fullMetrics: CaseMetric[];
+  yearly?: CaseYear[];
+  comparison?: CaseMetric[];
   work: string[];
   proof: { src: string; alt: string; caption: string };
 };
@@ -21,19 +32,71 @@ const caseStudies: CaseStudy[] = [
   {
     id: "finmaster",
     category: "Онлайн-курсы",
-    period: "2024 → 2025",
+    period: "2024 — 2026",
     client: "Finmaster Group",
-    description: "Онлайн-образование в Казахстане с несколькими образовательными продуктами и платным трафиком как одним из ключевых каналов продаж.",
+    description: "Finmaster Group — онлайн-образование в Казахстане. Платный трафик был одним из ключевых каналов продаж, а работа велась последовательно в 2024, 2025 и первой половине 2026 года.",
     task: "Масштабировать рекламные кампании и увеличить объём покупок, не ухудшая стоимость привлечения клиента.",
-    primary: { value: "₸197 млн", label: "выручки" },
+    primary: { value: "₸441 млн+", label: "выручки" },
     secondary: [
-      { value: "+105%", label: "покупок" },
-      { value: "−32%", label: "CAC" },
+      { value: "2 521", label: "продажа" },
     ],
     fullMetrics: [
-      { value: "1 049", label: "покупок за год" },
-      { value: "6,22%", label: "конверсия в покупку" },
-      { value: "$63,8", label: "стоимость покупателя" },
+      { value: "+105%", label: "продаж · 2025 vs 2024" },
+      { value: "−32%", label: "CPA продажи · 2025 vs 2024" },
+      { value: "8,23%", label: "конверсия лид → продажа · 2026 · январь–июнь" },
+    ],
+    yearly: [
+      {
+        period: "2024",
+        highlights: [
+          { value: "512", label: "продаж" },
+          { value: "₸85,3 млн", label: "выручки" },
+        ],
+        metrics: [
+          { value: "$48 091", label: "рекламный бюджет" },
+          { value: "13 329", label: "лиды" },
+          { value: "$3,61", label: "CPL" },
+          { value: "$93,93", label: "CPA продажи" },
+          { value: "3,84%", label: "конверсия лид → продажа" },
+        ],
+      },
+      {
+        period: "2025",
+        highlights: [
+          { value: "1 049", label: "продаж" },
+          { value: "≈ ₸197 млн", label: "выручки" },
+        ],
+        metrics: [
+          { value: "$66 902", label: "рекламный бюджет" },
+          { value: "16 855", label: "лиды" },
+          { value: "$3,97", label: "CPL" },
+          { value: "$63,78", label: "CPA продажи" },
+          { value: "6,22%", label: "конверсия лид → продажа" },
+        ],
+      },
+      {
+        period: "2026",
+        note: "Январь–июнь",
+        highlights: [
+          { value: "960", label: "продаж" },
+          { value: "₸158,8 млн", label: "выручки", detail: "₸158 829 300" },
+        ],
+        metrics: [
+          { value: "$67 182,10", label: "рекламный бюджет" },
+          { value: "11 666", label: "лиды" },
+          { value: "$5,76", label: "CPL" },
+          { value: "$69,98", label: "CPA продажи" },
+          { value: "8,23%", label: "конверсия лид → продажа" },
+        ],
+      },
+    ],
+    comparison: [
+      { value: "+39%", label: "рекламный бюджет" },
+      { value: "+26%", label: "лиды" },
+      { value: "+105%", label: "продажи" },
+      { value: "≈ +131%", label: "выручка" },
+      { value: "−32%", label: "CPA продажи" },
+      { value: "3,84% → 6,22%", label: "конверсия лид → продажа" },
     ],
     work: [
       "Перестроена структура платного трафика по продуктам и этапам воронки.",
@@ -209,9 +272,42 @@ export default function CasesSection() {
                 <p>{activeCase.task}</p>
               </section>
 
+              {activeCase.yearly && (
+                <section className="case-modal-section case-yearly-section">
+                  <p className="case-modal-label">Динамика по годам</p>
+                  <div className="case-year-grid">
+                    {activeCase.yearly.map((year) => (
+                      <article className="case-year" key={year.period}>
+                        <header className="case-year-heading">
+                          <strong>{year.period}</strong>
+                          {year.note && <span>{year.note}</span>}
+                        </header>
+                        <div className="case-year-highlights">
+                          {year.highlights.map((metric) => (
+                            <div className="case-year-highlight" key={metric.label}>
+                              <strong>{metric.value}</strong>
+                              <span>{metric.label}</span>
+                              {metric.detail && <small>{metric.detail}</small>}
+                            </div>
+                          ))}
+                        </div>
+                        <dl className="case-year-metrics">
+                          {year.metrics.map((metric) => (
+                            <div key={metric.label}>
+                              <dt>{metric.label}</dt>
+                              <dd>{metric.value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
+
               <section className="case-modal-section">
                 <p className="case-modal-label">Ключевые результаты</p>
-                <div className="case-modal-results">
+                <div className={`case-modal-results case-modal-results-${activeCase.id} ${(activeCase.secondary.length + activeCase.fullMetrics.length) % 2 ? "has-odd-metrics" : ""}`}>
                   <div className="case-modal-main-result">
                     <strong>{activeCase.primary.value}</strong>
                     <span>{activeCase.primary.label}</span>
@@ -224,6 +320,20 @@ export default function CasesSection() {
                   ))}
                 </div>
               </section>
+
+              {activeCase.comparison && (
+                <section className="case-modal-section case-comparison-section">
+                  <p className="case-modal-label">2025 vs 2024</p>
+                  <div className="case-comparison-grid">
+                    {activeCase.comparison.map((metric) => (
+                      <div key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               <section className="case-modal-section case-modal-proof">
                 <p className="case-modal-label">Пруфы</p>
