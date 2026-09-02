@@ -1,4 +1,5 @@
 import CasesSection from "./CasesSection";
+import ContactModal from "./ContactModal";
 
 const ArrowUpRight = () => (
   <span aria-hidden="true" className="arrow-up-right">
@@ -127,6 +128,7 @@ export default function Home() {
 
         <CasesSection />
       </div>
+      <ContactModal />
     </main>
   );
 }

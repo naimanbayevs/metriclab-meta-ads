@@ -27,6 +27,11 @@ type CaseStage = {
   metrics: CaseMetric[];
 };
 
+type CaseEquation = {
+  factors: CaseMetric[];
+  result: CaseMetric;
+};
+
 type CaseStudy = {
   id: string;
   category: string;
@@ -39,11 +44,17 @@ type CaseStudy = {
   primary: CaseMetric;
   secondary: CaseMetric[];
   fullMetrics: CaseMetric[];
+  modalPrimaryValue?: string;
   modalPrimaryLabel?: string;
   modalMetrics?: CaseMetric[];
   yearly?: CaseYear[];
   comparison?: CaseMetric[];
   stages?: CaseStage[];
+  resultMetrics?: CaseMetric[];
+  economics?: CaseEquation[];
+  returnMetrics?: CaseMetric[];
+  returnNote?: string;
+  periodMetrics?: CaseMetric[];
   summary?: string;
   work: string[];
   proof?: { src: string; alt: string; caption: string };
@@ -151,11 +162,11 @@ const caseStudies: CaseStudy[] = [
   },
   {
     id: "jewelry",
-    category: "Ювелирный e-commerce",
+    category: "Ювелирные украшения",
     period: "2024 — 2026",
     client: "Бренд украшений из серебра",
     startNote: "Начало сотрудничества — ноябрь 2024 года.",
-    description: "Новый e-commerce бренд украшений из серебра. На момент начала работы рекламные кампании запускались практически с нуля, а у бренда ещё не было сформированной аудитории в социальных сетях.",
+    description: "Бренд украшений из серебра. На момент начала работы рекламные кампании запускались практически с нуля, а у бренда ещё не было сформированной аудитории в социальных сетях.",
     task: "Построить стабильный канал продаж через платный трафик и постепенно масштабировать рекламный бюджет без потери окупаемости.",
     primary: { value: "7×+", label: "ROAS" },
     secondary: [
@@ -194,8 +205,146 @@ const caseStudies: CaseStudy[] = [
     summary: "За время сотрудничества рекламный бюджет был масштабирован с $10 до $100 в день. При этом реклама сохраняет ROAS от 7×. За период в платный трафик инвестировано около $45 тыс., а аудитория бренда выросла с нуля до 94 тыс. подписчиков.",
     work: [],
     proofs: [
-      { title: "", src: null, alt: "Скриншот рекламного кабинета ювелирного e-commerce бренда", caption: "Скриншот рекламного кабинета" },
+      { title: "", src: "/jewelry-ads-proof.png", alt: "Скриншот рекламного кабинета ювелирного e-commerce бренда", caption: "Скриншот рекламного кабинета" },
     ],
+  },
+  {
+    id: "kindergarten",
+    category: "Частный детский сад",
+    period: "2024 — 2026",
+    client: "Частный детский сад в Алматы",
+    startNote: "Ноябрь 2024 — март 2026 · около 17 месяцев.",
+    description: "Частный детский сад в Алматы со стоимостью посещения ₸150 000 в месяц. Основной задачей платного трафика было обеспечивать стабильный поток новых клиентов при небольшом рекламном бюджете.",
+    task: "Стабильно приводить новых клиентов в детский сад при рекламном бюджете около $300 в месяц и сохранять высокую окупаемость привлечения.",
+    primary: { value: "≈3", label: "новых клиента / месяц" },
+    secondary: [
+      { value: "$300", label: "рекламный бюджет / месяц" },
+      { value: "₸1,5 млн", label: "LTV клиента" },
+    ],
+    fullMetrics: [
+      { value: "₸1,5 млн", label: "LTV клиента" },
+      { value: "≈30×", label: "LTV ROAS" },
+    ],
+    modalPrimaryValue: "51",
+    modalPrimaryLabel: "продажа за период",
+    resultMetrics: [
+      { value: "51", label: "продажа за период" },
+      { value: "$300", label: "рекламный бюджет / месяц" },
+      { value: "₸150 000", label: "месячная стоимость" },
+      { value: "10 месяцев", label: "средний LTV" },
+    ],
+    economics: [
+      {
+        factors: [
+          { value: "₸150 000", label: "в месяц" },
+          { value: "10", label: "месяцев LTV" },
+        ],
+        result: { value: "₸1,5 млн", label: "LTV одного клиента" },
+      },
+      {
+        factors: [
+          { value: "3", label: "клиента" },
+          { value: "₸1,5 млн", label: "LTV клиента" },
+        ],
+        result: { value: "≈₸4,5 млн", label: "потенциальная LTV-выручка месячной когорты" },
+      },
+    ],
+    returnMetrics: [
+      { value: "≈3×", label: "ROAS по выручке первого месяца", detail: "₸450 000 / ≈₸150 000 расходов" },
+      { value: "≈30×", label: "LTV ROAS", detail: "≈₸4,5 млн / ≈₸150 000 расходов" },
+    ],
+    returnNote: "Оценка рассчитана при ориентировочном курсе ₸500/$ и среднем LTV 10 месяцев.",
+    periodMetrics: [
+      { value: "51", label: "продажа за период" },
+      { value: "≈$5 100", label: "рекламных расходов" },
+      { value: "≈₸76,5 млн", label: "потенциальная LTV-выручка привлечённых клиентов" },
+    ],
+    work: [],
+  },
+  {
+    id: "footwear",
+    category: "Fashion retail",
+    period: "2025 — 2026",
+    client: "Бренд обуви",
+    startNote: "Май 2025 — май 2026.",
+    description: "Работа была сосредоточена на постепенном масштабировании платного трафика и росте аудитории бренда.",
+    task: "Масштабировать рекламные кампании и увеличивать аудиторию бренда без резкого роста рекламного бюджета.",
+    primary: { value: "×4", label: "масштаб бюджета" },
+    secondary: [
+      { value: "+10 000", label: "подписчиков" },
+      { value: "$3 600", label: "рекламных расходов" },
+    ],
+    fullMetrics: [],
+    modalPrimaryLabel: "масштаб бюджета",
+    modalMetrics: [
+      { value: "+10 000", label: "подписчиков", detail: "25K → 35K" },
+      { value: "+40%", label: "рост аудитории" },
+      { value: "$3 600", label: "рекламных расходов за период" },
+    ],
+    stages: [
+      {
+        title: "Точка А",
+        note: "Май 2025",
+        metrics: [
+          { value: "$10 / день", label: "рекламный бюджет" },
+          { value: "25 000", label: "подписчиков" },
+        ],
+      },
+      {
+        title: "Точка Б",
+        note: "Май 2026",
+        metrics: [
+          { value: "$40 / день", label: "рекламный бюджет" },
+          { value: "35 000", label: "подписчиков" },
+        ],
+      },
+    ],
+    summary: "За 12 месяцев дневной рекламный бюджет был масштабирован с $10 до $40, а аудитория бренда выросла с 25 до 35 тыс. подписчиков. За период в рекламу было инвестировано около $3,6 тыс. Данные по выручке и ROAS не раскрываются.",
+    work: [],
+  },
+  {
+    id: "jewelry-brand",
+    category: "Jewelry brand",
+    period: "2025 — 2026",
+    client: "Бренд украшений из серебра",
+    startNote: "Сотрудничество с мая 2025 года.",
+    description: "Бренд украшений из серебра с продажами через социальные сети. Работа с платным трафиком ведётся с мая 2025 года с фокусом на продажи и рост аудитории бренда.",
+    task: "Масштабировать платный трафик, сохраняя высокую окупаемость рекламы и одновременно увеличивая аудиторию бренда.",
+    primary: { value: "10×+", label: "ROAS" },
+    secondary: [
+      { value: "$10,2K+", label: "рекламных расходов" },
+      { value: "37K+", label: "новых подписчиков" },
+    ],
+    fullMetrics: [],
+    modalPrimaryLabel: "ROAS",
+    modalMetrics: [
+      { value: "$10,2K+", label: "рекламных расходов" },
+      { value: "37K+", label: "новых подписчиков" },
+    ],
+    summary: "За период сотрудничества через несколько рекламных кабинетов в платный трафик инвестировано более $10 тыс. При этом реклама сохраняет ROAS от 10×, а подтверждённый рост аудитории составил более 37 тыс. новых подписчиков.",
+    work: [],
+  },
+  {
+    id: "premium-food",
+    category: "Premium bakery",
+    period: "2026",
+    client: "Премиальная кондитерская",
+    startNote: "Сотрудничество с июня 2026 года.",
+    description: "Премиальная кондитерская с продажами через социальные сети. Платный трафик используется одновременно для роста аудитории бренда и генерации входящих обращений.",
+    task: "Увеличивать аудиторию бренда и стабильно генерировать входящие обращения через платный трафик.",
+    primary: { value: "2 625", label: "новых подписчиков" },
+    secondary: [
+      { value: "940", label: "начатых переписок" },
+      { value: "$2,8K+", label: "рекламных расходов" },
+    ],
+    fullMetrics: [],
+    modalPrimaryLabel: "новых подписчиков",
+    modalMetrics: [
+      { value: "$2 808,83", label: "рекламных расходов" },
+      { value: "2 625", label: "новых подписчиков" },
+    ],
+    summary: "С июня 2026 года платный трафик принёс бренду более 2,6 тыс. новых подписчиков и 940 начатых переписок при рекламных расходах около $2,8 тыс.",
+    work: [],
   },
 ];
 
@@ -253,7 +402,6 @@ export default function CasesSection() {
   };
 
   const openProof = (src: string, alt: string) => {
-    if (!window.matchMedia("(max-width: 820px)").matches) return;
     proofOpenRef.current = true;
     setOpenProofImage({ src, alt });
   };
@@ -299,22 +447,41 @@ export default function CasesSection() {
               </button>
             </article>
           ))}
+
+          <article className="case-card case-contact-card">
+            <div className="case-contact-card-top">
+              <span>Новый проект</span>
+              <span>Следующий кейс</span>
+            </div>
+
+            <div className="case-contact-card-copy">
+              <h3>
+                Ваш проект может стать <em>следующим кейсом</em>
+              </h3>
+              <p>Расскажите о задаче — обсудим, какой результат можно получить.</p>
+            </div>
+
+            <a className="case-contact-card-button" href="#contact">
+              Обсудить сотрудничество <span aria-hidden="true">↗</span>
+            </a>
+          </article>
         </div>
       </section>
 
       {activeCase &&
         createPortal(
-          <div className="case-modal-overlay" onMouseDown={(event) => {
-            if (event.target === event.currentTarget) closeModal();
-          }}>
-            <article
-              ref={modalRef}
-              className={`case-modal case-modal-${activeCase.id}`}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby={`case-modal-${activeCase.id}`}
-              aria-describedby={`case-modal-description-${activeCase.id}`}
-            >
+          <>
+            <div className="case-modal-overlay" onMouseDown={(event) => {
+              if (event.target === event.currentTarget) closeModal();
+            }}>
+              <article
+                ref={modalRef}
+                className={`case-modal case-modal-${activeCase.id}`}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={`case-modal-${activeCase.id}`}
+                aria-describedby={`case-modal-description-${activeCase.id}`}
+              >
               <button ref={closeRef} className="case-modal-close" type="button" onClick={closeModal} aria-label="Закрыть кейс">
                 <span aria-hidden="true">×</span>
               </button>
@@ -333,6 +500,73 @@ export default function CasesSection() {
                 <p className="case-modal-label">Задача</p>
                 <p>{activeCase.task}</p>
               </section>
+
+              {activeCase.resultMetrics && (
+                <section className="case-modal-section case-business-section">
+                  <p className="case-modal-label">Результат</p>
+                  <div className="case-business-grid">
+                    {activeCase.resultMetrics.map((metric) => (
+                      <div className="case-business-metric" key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {activeCase.economics?.map((equation, equationIndex) => (
+                <section className="case-modal-section case-economics-section" key={equation.result.label}>
+                  <p className="case-modal-label">{equationIndex === 0 ? "Экономика одного клиента" : "Экономика месячной когорты"}</p>
+                  <div className="case-economics-equation">
+                    {equation.factors.map((factor, factorIndex) => (
+                      <div className="case-equation-part" key={factor.label}>
+                        {factorIndex > 0 && <span className="case-equation-operator" aria-hidden="true">×</span>}
+                        <div>
+                          <strong>{factor.value}</strong>
+                          <span>{factor.label}</span>
+                        </div>
+                      </div>
+                    ))}
+                    <span className="case-equation-operator" aria-hidden="true">=</span>
+                    <div className="case-equation-result">
+                      <strong>{equation.result.value}</strong>
+                      <span>{equation.result.label}</span>
+                    </div>
+                  </div>
+                </section>
+              ))}
+
+              {activeCase.returnMetrics && (
+                <section className="case-modal-section case-return-section">
+                  <p className="case-modal-label">Окупаемость</p>
+                  <div className="case-return-grid">
+                    {activeCase.returnMetrics.map((metric) => (
+                      <div key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                        {metric.detail && <small>{metric.detail}</small>}
+                      </div>
+                    ))}
+                  </div>
+                  {activeCase.returnNote && <p className="case-return-note">{activeCase.returnNote}</p>}
+                </section>
+              )}
+
+              {activeCase.periodMetrics && (
+                <section className="case-modal-section case-period-section">
+                  <p className="case-modal-label">Итог за период</p>
+                  <p className="case-period-note">Ноябрь 2024 — март 2026 · около 17 месяцев</p>
+                  <div className="case-period-grid">
+                    {activeCase.periodMetrics.map((metric) => (
+                      <div key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {activeCase.yearly && (
                 <section className="case-modal-section case-yearly-section">
@@ -392,7 +626,7 @@ export default function CasesSection() {
                 </section>
               )}
 
-              {activeCase.summary && (
+              {activeCase.summary && activeCase.id !== "footwear" && (
                 <section className="case-modal-section case-modal-summary">
                   <p className="case-modal-label">Итог</p>
                   <p>{activeCase.summary}</p>
@@ -404,7 +638,7 @@ export default function CasesSection() {
                   <p className="case-modal-label">Ключевые результаты</p>
                   <div className={`case-modal-results case-modal-results-${activeCase.id} ${visibleModalMetrics.length % 2 ? "has-odd-metrics" : ""}`}>
                     <div className="case-modal-main-result">
-                      <strong>{activeCase.primary.value}</strong>
+                      <strong>{activeCase.modalPrimaryValue ?? activeCase.primary.value}</strong>
                       <span>{activeCase.modalPrimaryLabel ?? activeCase.primary.label}</span>
                     </div>
                     {visibleModalMetrics.map((metric) => (
@@ -415,6 +649,13 @@ export default function CasesSection() {
                       </div>
                     ))}
                   </div>
+                </section>
+              )}
+
+              {activeCase.summary && activeCase.id === "footwear" && (
+                <section className="case-modal-section case-modal-summary">
+                  <p className="case-modal-label">Итог</p>
+                  <p>{activeCase.summary}</p>
                 </section>
               )}
 
@@ -432,16 +673,15 @@ export default function CasesSection() {
                 </section>
               )}
 
-              <section className="case-modal-section case-modal-proof">
-                {activeCase.id === "jewelry" && <p className="case-modal-label">Пруф</p>}
-                {activeCase.id !== "education" && activeCase.id !== "jewelry" && <p className="case-modal-label">Пруфы</p>}
-                {activeCase.proofs ? (
+              {(activeCase.proofs || activeCase.proof) && (
+                <section className="case-modal-section case-modal-proof">
+                  {activeCase.proofs ? (
                   <div className="case-proof-grid">
                     {activeCase.proofs.map((proof) => (
                       <figure className="case-proof-card" key={proof.title || proof.alt}>
                         {proof.title && <p>{proof.title}</p>}
                         {proof.src ? (
-                          <button className="case-proof-trigger" type="button" onClick={() => openProof(proof.src!, proof.alt)} aria-label={`Открыть крупнее: ${proof.title}`}>
+                          <button className="case-proof-trigger" type="button" onClick={() => openProof(proof.src!, proof.alt)} aria-label={`Открыть крупнее: ${proof.title || proof.caption || "изображение"}`}>
                             <img src={proof.src} alt={proof.alt} />
                           </button>
                         ) : (
@@ -455,15 +695,16 @@ export default function CasesSection() {
                       </figure>
                     ))}
                   </div>
-                ) : activeCase.proof ? (
+                  ) : activeCase.proof ? (
                   <figure>
-                    <button className="case-proof-trigger" type="button" onClick={() => openProof(activeCase.proof!.src, activeCase.proof!.alt)} aria-label="Открыть пруф крупнее">
+                    <button className="case-proof-trigger" type="button" onClick={() => openProof(activeCase.proof!.src, activeCase.proof!.alt)} aria-label="Открыть изображение крупнее">
                       <img src={activeCase.proof.src} alt={activeCase.proof.alt} />
                     </button>
                     <figcaption>{activeCase.proof.caption}</figcaption>
                   </figure>
-                ) : null}
-              </section>
+                  ) : null}
+                </section>
+              )}
 
               {activeCase.work.length > 0 && (
                 <section className="case-modal-section">
@@ -477,19 +718,24 @@ export default function CasesSection() {
               )}
 
               <footer className="case-modal-footer">
-                <a href="#contact" onClick={closeModal}>Обсудить похожий проект <span aria-hidden="true">↗</span></a>
+                <a href="#contact" onClick={closeModal}>Обсудить сотрудничество <span aria-hidden="true">↗</span></a>
               </footer>
 
-              {openProofImage && (
-                <div className="case-proof-lightbox" role="dialog" aria-modal="true" aria-label="Увеличенный пруф" onClick={closeProof}>
-                  <button className="case-proof-lightbox-close" type="button" onClick={closeProof} aria-label="Закрыть увеличенный пруф">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                  <img src={openProofImage.src} alt={openProofImage.alt} onClick={(event) => event.stopPropagation()} />
-                </div>
-              )}
-            </article>
-          </div>,
+              </article>
+            </div>
+
+            {openProofImage && (
+              <div className="case-proof-lightbox" role="dialog" aria-modal="true" aria-label="Увеличенное изображение" onClick={closeProof}>
+                <button className="case-proof-lightbox-close" type="button" onClick={(event) => {
+                  event.stopPropagation();
+                  closeProof();
+                }} aria-label="Закрыть увеличенное изображение">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <img src={openProofImage.src} alt={openProofImage.alt} onClick={(event) => event.stopPropagation()} />
+              </div>
+            )}
+          </>,
           document.body,
         )}
     </>

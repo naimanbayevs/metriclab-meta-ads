@@ -1,5 +1,14 @@
 import type { Metadata } from 'next';
+import { Manrope } from 'next/font/google';
 import './globals.css';
+
+const manrope = Manrope({
+  subsets: ['cyrillic', 'latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-cases',
+  fallback: ['Inter', 'Helvetica Neue', 'Arial', 'sans-serif'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sanzhar-ads.sanzhar038.chatgpt.site'),
@@ -38,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body className={manrope.variable}>{children}</body>
     </html>
   );
 }
