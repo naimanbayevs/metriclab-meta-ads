@@ -205,7 +205,7 @@ const caseStudies: CaseStudy[] = [
     summary: "За время сотрудничества рекламный бюджет был масштабирован с $10 до $100 в день. При этом реклама сохраняет ROAS от 7×. За период в платный трафик инвестировано около $45 тыс., а аудитория бренда выросла с нуля до 94 тыс. подписчиков.",
     work: [],
     proofs: [
-      { title: "", src: "/jewelry-ads-proof.png", alt: "Скриншот рекламного кабинета ювелирного e-commerce бренда", caption: "Скриншот рекламного кабинета" },
+      { title: "", src: "/jewelry-ads-proof-blurred.png", alt: "Анонимизированный скриншот рекламного кабинета ювелирного бренда", caption: "Скриншот рекламного кабинета" },
     ],
   },
   {
@@ -461,7 +461,7 @@ export default function CasesSection() {
               <p>Расскажите о задаче — обсудим, какой результат можно получить.</p>
             </div>
 
-            <a className="case-contact-card-button" href="#contact">
+            <a className="case-contact-card-button" href="#contact" data-collaboration-cta>
               Обсудить сотрудничество <span aria-hidden="true">↗</span>
             </a>
           </article>
@@ -491,14 +491,38 @@ export default function CasesSection() {
                   <span>{activeCase.category}</span>
                   <span>{activeCase.period}</span>
                 </div>
-                <h2 id={`case-modal-${activeCase.id}`}>{activeCase.modalTitle ?? activeCase.client}</h2>
-                <p id={`case-modal-description-${activeCase.id}`}>{activeCase.description}</p>
+                <h2 id={`case-modal-${activeCase.id}`}>
+                  {activeCase.id === "education" ? (
+                    <>
+                      Профессиональное обучение{" "}
+                      <span className="education-title-line">в сфере финансов</span>
+                    </>
+                  ) : activeCase.id === "jewelry" || activeCase.id === "jewelry-brand" ? (
+                    <>
+                      Бренд украшений{" "}
+                      <span className="jewelry-title-line">из серебра</span>
+                    </>
+                  ) : (
+                    activeCase.modalTitle ?? activeCase.client
+                  )}
+                </h2>
+                <p id={`case-modal-description-${activeCase.id}`}>
+                  {activeCase.id === "football" ? (
+                    <>Сеть футбольных школ для детей: четыре рекламных кабинета Meta<span className="mobile-text-break" /> и продажи, зафиксированные в amoCRM.</>
+                  ) : activeCase.id === "kindergarten" ? (
+                    <>Частный детский сад в Алматы со стоимостью посещения ₸150 000<span className="mobile-text-break" /> в месяц. Основной задачей платного трафика было обеспечивать стабильный поток новых клиентов при небольшом рекламном бюджете.</>
+                  ) : activeCase.description}
+                </p>
                 {activeCase.startNote && <p className="case-modal-start-note">{activeCase.startNote}</p>}
               </header>
 
               <section className="case-modal-section case-modal-task">
                 <p className="case-modal-label">Задача</p>
-                <p>{activeCase.task}</p>
+                <p>
+                  {activeCase.id === "football" ? (
+                    <>Связать рекламные расходы с квалификациями, записями на пробное занятие, продажами и выручкой — <span className="mobile-text-break" />и видеть экономику всей сети в одном отчёте.</>
+                  ) : activeCase.task}
+                </p>
               </section>
 
               {activeCase.resultMetrics && (
@@ -629,7 +653,11 @@ export default function CasesSection() {
               {activeCase.summary && activeCase.id !== "footwear" && (
                 <section className="case-modal-section case-modal-summary">
                   <p className="case-modal-label">Итог</p>
-                  <p>{activeCase.summary}</p>
+                  <p>
+                    {activeCase.id === "jewelry" ? (
+                      <>За время сотрудничества рекламный бюджет был масштабирован с $10 до $100 в день. При этом реклама сохраняет ROAS от 7×.<span className="mobile-text-break" /> За период в платный трафик инвестировано около $45 тыс., а аудитория бренда выросла с нуля до 94 тыс. подписчиков.</>
+                    ) : activeCase.summary}
+                  </p>
                 </section>
               )}
 
@@ -718,7 +746,7 @@ export default function CasesSection() {
               )}
 
               <footer className="case-modal-footer">
-                <a href="#contact" onClick={closeModal}>Обсудить сотрудничество <span aria-hidden="true">↗</span></a>
+                <a href="#contact" onClick={closeModal} data-collaboration-cta>Обсудить сотрудничество <span aria-hidden="true">↗</span></a>
               </footer>
 
               </article>

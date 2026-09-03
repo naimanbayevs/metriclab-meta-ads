@@ -7,6 +7,7 @@ const WHATSAPP_NUMBER = "77010705794";
 
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showFloatingCta, setShowFloatingCta] = useState(false);
   const [name, setName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [monthlyBudget, setMonthlyBudget] = useState("");
@@ -29,6 +30,48 @@ export default function ContactModal() {
 
     document.addEventListener("click", openFromContactLink);
     return () => document.removeEventListener("click", openFromContactLink);
+  }, []);
+
+  useEffect(() => {
+    const mobileViewport = window.matchMedia("(max-width: 820px)");
+    let frame = 0;
+
+    const updateVisibility = () => {
+      frame = 0;
+      if (!mobileViewport.matches) {
+        setShowFloatingCta(false);
+        return;
+      }
+
+      const regularCtaIsVisible = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-collaboration-cta]"),
+      ).some((element) => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.bottom > 0 && bounds.top < window.innerHeight;
+      });
+
+      setShowFloatingCta(!regularCtaIsVisible);
+    };
+
+    const scheduleUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateVisibility);
+    };
+
+    const contentObserver = new MutationObserver(scheduleUpdate);
+    contentObserver.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    mobileViewport.addEventListener("change", scheduleUpdate);
+    scheduleUpdate();
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      contentObserver.disconnect();
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      mobileViewport.removeEventListener("change", scheduleUpdate);
+    };
   }, []);
 
   useEffect(() => {
@@ -84,10 +127,19 @@ export default function ContactModal() {
     );
   };
 
-  if (!isOpen) return null;
+  return (
+    <>
+      <a
+        className={`mobile-floating-cta ${showFloatingCta && !isOpen ? "is-visible" : ""}`}
+        href="#contact"
+        aria-hidden={showFloatingCta && !isOpen ? undefined : true}
+        tabIndex={showFloatingCta && !isOpen ? undefined : -1}
+      >
+        Обсудить сотрудничество <span aria-hidden="true">↗</span>
+      </a>
 
-  return createPortal(
-    <div className="contact-modal-overlay" onMouseDown={handleOverlayClick}>
+      {isOpen && createPortal(
+        <div className="contact-modal-overlay" onMouseDown={handleOverlayClick}>
       <section
         className="contact-modal"
         role="dialog"
@@ -171,8 +223,10 @@ export default function ContactModal() {
             </p>
           </div>
         </form>
-      </section>
-    </div>,
-    document.body,
+          </section>
+        </div>,
+        document.body,
+      )}
+    </>
   );
 }
