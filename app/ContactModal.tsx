@@ -3,7 +3,8 @@
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-const WHATSAPP_NUMBER = "77010705794";
+import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "./contacts";
+import { WhatsAppIcon } from "./icons";
 
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -98,6 +99,8 @@ export default function ContactModal() {
     };
   }, [isOpen]);
 
+  const isFloatingVisible = showFloatingCta && !isOpen;
+
   const closeModal = () => setIsOpen(false);
 
   const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -129,14 +132,29 @@ export default function ContactModal() {
 
   return (
     <>
-      <a
-        className={`mobile-floating-cta ${showFloatingCta && !isOpen ? "is-visible" : ""}`}
-        href="#contact"
-        aria-hidden={showFloatingCta && !isOpen ? undefined : true}
-        tabIndex={showFloatingCta && !isOpen ? undefined : -1}
+      <div
+        className={`mobile-floating-bar ${isFloatingVisible ? "is-visible" : ""}`}
+        aria-hidden={isFloatingVisible ? undefined : true}
       >
-        Обсудить сотрудничество <span aria-hidden="true">↗</span>
-      </a>
+        <a
+          className="mobile-floating-cta"
+          href="#contact"
+          tabIndex={isFloatingVisible ? undefined : -1}
+        >
+          Обсудить <span aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          className="mobile-floating-wa"
+          href={WHATSAPP_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          tabIndex={isFloatingVisible ? undefined : -1}
+        >
+          <WhatsAppIcon />
+          WhatsApp
+        </a>
+      </div>
 
       {isOpen && createPortal(
         <div className="contact-modal-overlay" onMouseDown={handleOverlayClick}>

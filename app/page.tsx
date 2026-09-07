@@ -1,6 +1,9 @@
 import CasesSection from "./CasesSection";
 import ContactModal from "./ContactModal";
 import ProcessSection from "./ProcessSection";
+import SiteFooter from "./SiteFooter";
+import { TELEGRAM_LINK, WHATSAPP_LINK } from "./contacts";
+import { TelegramIcon, WhatsAppIcon } from "./icons";
 
 const ArrowUpRight = () => (
   <span aria-hidden="true" className="arrow-up-right">
@@ -23,11 +26,34 @@ export default function Home() {
             <a href="#services">Услуги</a>
           </nav>
 
-          <a className="header-cta" href="#contact">
-            <span className="header-cta-desktop">Обсудить проект</span>
-            <span className="header-cta-mobile">Обсудить</span>
-            <ArrowUpRight />
-          </a>
+          <div className="header-actions">
+            <div className="header-contacts">
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Написать в WhatsApp"
+                title="WhatsApp"
+              >
+                <WhatsAppIcon />
+              </a>
+              <a
+                href={TELEGRAM_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Написать в Telegram"
+                title="Telegram"
+              >
+                <TelegramIcon />
+              </a>
+            </div>
+
+            <a className="header-cta" href="#contact">
+              <span className="header-cta-desktop">Обсудить проект</span>
+              <span className="header-cta-mobile">Обсудить</span>
+              <ArrowUpRight />
+            </a>
+          </div>
         </header>
 
         <section className="hero" id="top">
@@ -70,7 +96,7 @@ export default function Home() {
             </div>
 
             <div className="hero-actions mobile-actions">
-              <a className="hero-button primary-cta" href="#contact">
+              <a className="hero-button primary-cta" href="#contact" data-collaboration-cta>
                 Обсудить проект <ArrowUpRight />
               </a>
               <a className="hero-button secondary-cta" href="#cases">
@@ -79,7 +105,7 @@ export default function Home() {
             </div>
 
             <div className="hero-actions">
-              <a className="hero-button primary-cta" href="#contact">
+              <a className="hero-button primary-cta" href="#contact" data-collaboration-cta>
                 Обсудить проект <ArrowUpRight />
               </a>
               <a className="hero-button secondary-cta" href="#cases">
@@ -129,6 +155,7 @@ export default function Home() {
 
         <CasesSection />
         <ProcessSection />
+        <SiteFooter />
       </div>
       <ContactModal />
     </main>
