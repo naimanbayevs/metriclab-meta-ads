@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: 'https://sanzhar-ads.sanzhar038.chatgpt.site',
     images: [
       {
-        url: 'https://sanzhar-ads.sanzhar038.chatgpt.site/og.jpg',
+        url: 'https://sanzhar-ads.sanzhar038.chatgpt.site/og.png',
         width: 1729,
         height: 910,
         alt: 'Реклама с фокусом на продажи — Санжар Найманбаев',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Реклама с фокусом на продажи',
     description:
       'Санжар Найманбаев — таргетированная реклама для бизнеса с понятной связью между заявками и продажами.',
-    images: ['https://sanzhar-ads.sanzhar038.chatgpt.site/og.jpg'],
+    images: ['https://sanzhar-ads.sanzhar038.chatgpt.site/og.png'],
   },
 };
 
