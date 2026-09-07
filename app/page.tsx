@@ -65,33 +65,32 @@ export default function Home() {
           </p>
 
           <h1>
-            Performance
+            Реклама,
             <br />
-            <em>Marketer</em>
+            которая <em>окупается</em>
           </h1>
 
           <div className="hero-intro">
             <p className="value-proposition">
-              Выстраиваю performance-маркетинг с фокусом на окупаемость —
-              <br className="desktop-break" /> настраиваю рекламу, аналитику и связь с продажами под процессы бизнеса.
+              Считаю не заявки, а деньги, которые они принесли.
             </p>
 
             <div className="hero-proof mobile-proof" aria-label="Опыт и специализация">
               <div className="proof-item">
                 <strong>10+</strong>
-                <span className="proof-description">Лет в маркетинге</span>
+                <span className="proof-description">лет в продажах и рекламе</span>
               </div>
               <div className="proof-item">
                 <strong>$500K+</strong>
-                <span className="proof-description">Бюджетов под управлением</span>
+                <span className="proof-description">рекламного бюджета под управлением</span>
               </div>
               <div className="proof-item">
                 <strong>до ×5</strong>
-                <span className="proof-description">Рост продаж в проектах</span>
+                <span className="proof-description">рост продаж в проектах</span>
               </div>
               <div className="proof-item">
                 <strong>80%</strong>
-                <span className="proof-description">клиентов работают со мной больше года</span>
+                <span className="proof-description">клиентов со мной дольше года</span>
               </div>
             </div>
 
@@ -136,7 +135,7 @@ export default function Home() {
         <div className="hero-proof" aria-label="Опыт и специализация">
           <div className="proof-item">
             <strong>10+</strong>
-            <span>лет в рекламе и продажах</span>
+            <span>лет в продажах и рекламе</span>
           </div>
           <div className="proof-item">
             <strong>$500K+</strong>
@@ -148,7 +147,7 @@ export default function Home() {
           </div>
           <div className="proof-item">
             <strong>80%</strong>
-            <span>клиентов работают со мной больше года</span>
+            <span>клиентов со мной дольше года</span>
           </div>
         </div>
         </section>
