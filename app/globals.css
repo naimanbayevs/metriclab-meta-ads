@@ -358,7 +358,7 @@ h1 em { color: #e8e8e4; font-style: normal; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
   padding: 14px 18px;
   border: 0;
@@ -374,11 +374,11 @@ h1 em { color: #e8e8e4; font-style: normal; }
 .proof-item::before { display: none; }
 
 .proof-item span {
-  margin-top: 4px;
+  margin-top: 6px;
   color: var(--muted);
-  font-size: 9.6px;
-  letter-spacing: .12em;
-  line-height: 1.35;
+  font-size: 12px;
+  letter-spacing: .04em;
+  line-height: 1.4;
   text-transform: none;
 }
 
@@ -1972,21 +1972,25 @@ h1 em { color: #e8e8e4; font-style: normal; }
     box-shadow: none;
   }
 
-  .mobile-proof .proof-item {
+  .mobile-proof {
     display: grid;
-    grid-template-columns: clamp(100px, 32.5vw, 140px) minmax(0, 1fr);
-    column-gap: 4px;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 18px;
+  }
+
+  .mobile-proof .proof-item { display: contents; }
+
+  .mobile-proof .proof-item strong,
+  .mobile-proof .proof-description {
+    display: flex;
     align-items: center;
-    min-height: 46px;
+    min-height: 52px;
+    margin: 0;
     padding: 0;
-    border: 0;
     border-bottom: 1px solid rgba(255,255,255,.055);
-    border-radius: 0;
-    background: transparent;
     text-align: left;
   }
 
-  .mobile-proof .proof-item:last-child { border-bottom: 1px solid rgba(255,255,255,.055); }
   .mobile-proof .proof-item::before { display: none; }
   .mobile-proof .proof-item strong {
     color: var(--orange);
@@ -1996,16 +2000,15 @@ h1 em { color: #e8e8e4; font-style: normal; }
   }
   .mobile-proof .proof-description {
     max-width: none;
-    margin: 0;
-    color: rgba(255,255,255,.66);
-    font-size: clamp(9px, 2.55vw, 11px);
+    color: rgba(255,255,255,.78);
+    font-size: 13px;
     font-weight: 450;
     letter-spacing: .01em;
-    line-height: 1.3;
+    line-height: 1.35;
     text-transform: none;
   }
   .hero-intro > .mobile-proof {
-    grid-template-columns: 1fr;
+    grid-template-columns: max-content minmax(0, 1fr);
     margin-top: 14px;
   }
 
