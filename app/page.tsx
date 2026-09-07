@@ -100,7 +100,7 @@ export default function Home() {
           </p>
           <img
             className="hero-portrait"
-            src="/sanzhar-hero-portrait.png"
+            src="/sanzhar-hero-portrait.webp"
             alt="Санжар Найманбаев"
             width="1145"
             height="1374"
