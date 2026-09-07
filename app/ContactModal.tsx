@@ -6,27 +6,12 @@ import { createPortal } from "react-dom";
 import { WHATSAPP_LINK, WHATSAPP_NUMBER } from "./contacts";
 import { WhatsAppIcon } from "./icons";
 
-const BUDGET_OPTIONS = [
-  "до $500",
-  "$500 — 2 000",
-  "$2 000 — 5 000",
-  "больше $5 000",
-] as const;
-
-// ЗАПОЛНИТЬ: ссылка на политику обработки персональных данных.
-// Пока пусто — текст согласия выводится без ссылки.
-const PRIVACY_URL = "";
-
-type Status = "idle" | "sending" | "sent" | "error";
-
 export default function ContactModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [showFloatingCta, setShowFloatingCta] = useState(false);
   const [name, setName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [budget, setBudget] = useState("");
-  const [company, setCompany] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
+  const [monthlyBudget, setMonthlyBudget] = useState("");
   const [error, setError] = useState("");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
@@ -41,7 +26,6 @@ export default function ContactModal() {
       event.preventDefault();
       triggerRef.current = link;
       setError("");
-      setStatus("idle");
       setIsOpen(true);
     };
 
@@ -123,70 +107,27 @@ export default function ContactModal() {
     if (event.target === event.currentTarget) closeModal();
   };
 
-  const whatsappFallbackLink = () => {
-    const message = [
-      "Здравствуйте! Хочу обсудить сотрудничество.",
-      name.trim() ? `Меня зовут ${name.trim()}.` : "",
-      budget ? `Рекламный бюджет в месяц: ${budget}.` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  };
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (status === "sending") return;
-
     const phoneDigits = whatsapp.replace(/\D/g, "");
-
-    if (!name.trim()) {
-      setError("Напишите, как к вам обращаться.");
+    if (!name.trim() || phoneDigits.length < 10 || !monthlyBudget.trim()) {
+      setError("Укажите имя, корректный WhatsApp и рекламный бюджет.");
       return;
     }
 
-    if (phoneDigits.length < 10) {
-      setError("Проверьте номер WhatsApp — кажется, не хватает цифр.");
-      return;
-    }
+    const message = [
+      "Здравствуйте! Хочу обсудить сотрудничество.",
+      `Меня зовут ${name.trim()}.`,
+      `Мой WhatsApp: ${whatsapp.trim()}.`,
+      `Рекламный бюджет в месяц: ${monthlyBudget.trim()}.`,
+    ].join("\n");
 
-    if (!budget) {
-      setError("Выберите рекламный бюджет в месяц.");
-      return;
-    }
-
-    setError("");
-    setStatus("sending");
-
-    try {
-      const response = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          whatsapp: whatsapp.trim(),
-          budget,
-          company,
-        }),
-      });
-
-      const result = (await response.json().catch(() => null)) as
-        | { ok?: boolean; error?: string }
-        | null;
-
-      if (!response.ok || !result?.ok) {
-        setStatus("error");
-        setError(result?.error || "Заявка не отправилась. Напишите, пожалуйста, в WhatsApp.");
-        return;
-      }
-
-      setStatus("sent");
-    } catch {
-      setStatus("error");
-      setError("Заявка не отправилась. Напишите, пожалуйста, в WhatsApp.");
-    }
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
 
   return (
@@ -234,150 +175,73 @@ export default function ContactModal() {
           ×
         </button>
 
-        {status === "sent" ? (
-          <div className="contact-modal-done">
-            <p className="contact-modal-eyebrow">Заявка отправлена</p>
-            <h2 id="contact-modal-title">
-              Готово. Напишу вам <em>в течение дня</em>
-            </h2>
-            <p id="contact-modal-description">
-              Если хочется обсудить прямо сейчас — вот прямая ссылка, там уже
-              набран текст, останется только отправить.
+        <div className="contact-modal-copy">
+          <p className="contact-modal-eyebrow">Новый проект</p>
+          <h2 id="contact-modal-title">
+            Ваш проект может стать <em>следующим кейсом</em>
+          </h2>
+          <p id="contact-modal-description">
+            Оставьте контакты — напишу вам в WhatsApp и обсудим задачу.
+          </p>
+        </div>
+
+        <form className="contact-modal-form" onSubmit={handleSubmit} noValidate>
+          <label>
+            <span>Ваше имя</span>
+            <input
+              type="text"
+              name="name"
+              autoComplete="name"
+              value={name}
+              onChange={(event) => {
+                setName(event.target.value);
+                setError("");
+              }}
+              placeholder="Санжар"
+            />
+          </label>
+
+          <label>
+            <span>Номер WhatsApp</span>
+            <input
+              type="tel"
+              name="whatsapp"
+              autoComplete="tel"
+              inputMode="tel"
+              value={whatsapp}
+              onChange={(event) => {
+                setWhatsapp(event.target.value);
+                setError("");
+              }}
+              placeholder="+7 701 000 00 00"
+            />
+          </label>
+
+          <label>
+            <span>Рекламный бюджет в месяц</span>
+            <input
+              type="text"
+              name="monthly-budget"
+              inputMode="decimal"
+              value={monthlyBudget}
+              onChange={(event) => {
+                setMonthlyBudget(event.target.value);
+                setError("");
+              }}
+              placeholder="Например, $3 000"
+            />
+          </label>
+
+          <div className="contact-modal-submit-row">
+            <button type="submit">
+              Обсудить сотрудничество <span aria-hidden="true">↗</span>
+            </button>
+            <p className={error ? "contact-modal-error is-visible" : "contact-modal-error"} aria-live="polite">
+              {error}
             </p>
-
-            <div className="contact-modal-done-actions">
-              <a
-                className="contact-modal-wa"
-                href={whatsappFallbackLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <WhatsAppIcon />
-                Написать сразу в WhatsApp
-              </a>
-
-              <button type="button" onClick={closeModal}>
-                Вернуться на сайт
-              </button>
-            </div>
           </div>
-        ) : (
-          <>
-            <div className="contact-modal-copy">
-              <p className="contact-modal-eyebrow">Новый проект</p>
-              <h2 id="contact-modal-title">
-                Ваш проект может стать <em>следующим кейсом</em>
-              </h2>
-              <p id="contact-modal-description">
-                Оставьте контакты — напишу вам в WhatsApp и обсудим задачу.
-              </p>
-            </div>
-
-            <form className="contact-modal-form" onSubmit={handleSubmit} noValidate>
-              <label>
-                <span>Ваше имя</span>
-                <input
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  value={name}
-                  onChange={(event) => {
-                    setName(event.target.value);
-                    setError("");
-                  }}
-                  placeholder="Как к вам обращаться"
-                />
-              </label>
-
-              <label>
-                <span>Номер WhatsApp</span>
-                <input
-                  type="tel"
-                  name="whatsapp"
-                  autoComplete="tel"
-                  inputMode="tel"
-                  value={whatsapp}
-                  onChange={(event) => {
-                    setWhatsapp(event.target.value);
-                    setError("");
-                  }}
-                  placeholder="+7 701 000 00 00"
-                />
-              </label>
-
-              <fieldset className="contact-modal-budget">
-                <legend>Рекламный бюджет в месяц</legend>
-                <div className="contact-modal-budget-options">
-                  {BUDGET_OPTIONS.map((option) => (
-                    <label key={option} className={budget === option ? "is-selected" : ""}>
-                      <input
-                        type="radio"
-                        name="budget"
-                        value={option}
-                        checked={budget === option}
-                        onChange={() => {
-                          setBudget(option);
-                          setError("");
-                        }}
-                      />
-                      {option}
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-
-              <label className="contact-modal-honeypot" aria-hidden="true">
-                Не заполняйте это поле
-                <input
-                  type="text"
-                  name="company"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={company}
-                  onChange={(event) => setCompany(event.target.value)}
-                />
-              </label>
-
-              <div className="contact-modal-submit-row">
-                <button type="submit" disabled={status === "sending"}>
-                  {status === "sending" ? "Отправляю…" : "Обсудить сотрудничество"}
-                  <span aria-hidden="true">↗</span>
-                </button>
-
-                <p className="contact-modal-consent">
-                  Нажимая кнопку, вы соглашаетесь на обработку персональных данных
-                  {PRIVACY_URL ? (
-                    <>
-                      {" "}
-                      — <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">политика</a>
-                    </>
-                  ) : null}
-                  .
-                </p>
-
-                <p
-                  className={error ? "contact-modal-error is-visible" : "contact-modal-error"}
-                  aria-live="polite"
-                >
-                  {error}
-                </p>
-
-                {status === "error" ? (
-                  <a
-                    className="contact-modal-wa"
-                    href={whatsappFallbackLink()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <WhatsAppIcon />
-                    Написать в WhatsApp
-                  </a>
-                ) : null}
-              </div>
-            </form>
-          </>
-        )}
-      </section>
+        </form>
+          </section>
         </div>,
         document.body,
       )}

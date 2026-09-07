@@ -54,8 +54,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="site-footer-bottom">
-        <p>Санжар Найманбаев</p>
-        <p>Performance-маркетинг</p>
+        <p>Санжар Найманбаев · performance-маркетинг</p>
         {LEGAL_LINE ? <p className="site-footer-legal">{LEGAL_LINE}</p> : null}
       </div>
     </footer>
