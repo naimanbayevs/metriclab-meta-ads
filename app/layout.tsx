@@ -1,20 +1,31 @@
 import type { Metadata } from 'next';
-import { Manrope } from 'next/font/google';
+import { Manrope, Oswald } from 'next/font/google';
 import './globals.css';
 
+// Manrope — весь текст и интерфейс. Oswald — только заголовок в шапке.
+// Обе гарнитуры с кириллицей: Impact, который стоял раньше, её не имеет
+// и русский заголовок на нём не набрать.
 const manrope = Manrope({
   subsets: ['cyrillic', 'latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--font-cases',
-  fallback: ['Inter', 'Helvetica Neue', 'Arial', 'sans-serif'],
+  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
+});
+
+const oswald = Oswald({
+  subsets: ['cyrillic', 'latin'],
+  weight: ['500', '600', '700'],
+  display: 'swap',
+  variable: '--font-display',
+  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sanzhar-ads.sanzhar038.chatgpt.site'),
-  title: 'Санжар Найманбаев — реклама с фокусом на продажи',
+  title: 'Санжар Найманбаев — реклама, которая окупается',
   description:
-    'Таргетированная реклама для бизнеса: от стратегии и целевых обращений до понятной связи с продажами.',
+    'Meta Ads, Google Ads и лендинги для бизнеса. Считаю не заявки, а деньги, которые они принесли.',
   openGraph: {
     title: 'Реклама с фокусом на продажи',
     description:
@@ -47,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={manrope.variable}>{children}</body>
+      <body className={`${manrope.variable} ${oswald.variable}`}>{children}</body>
     </html>
   );
 }
